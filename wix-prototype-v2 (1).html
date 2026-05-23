@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wix Dashboard Prototype</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:Helvetica Neue,Helvetica,Arial,sans-serif;background:#f0f4f7;color:#131720;display:flex;flex-direction:column;min-height:100vh;font-size:14px;}
+#topnav{height:48px;background:#fff;border-bottom:1px solid #e8ecf0;display:flex;align-items:center;padding:0 16px;gap:16px;position:sticky;top:0;z-index:100;flex-shrink:0;}
+#topnav .wix-logo{font-size:22px;font-weight:900;letter-spacing:-1px;color:#000;margin-right:4px;flex-shrink:0;font-family:Helvetica Neue,Helvetica,Arial,sans-serif;}
+#topnav .tn-site{display:flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:#131720;cursor:pointer;padding:4px 8px;border-radius:6px;}
+#topnav .tn-site:hover{background:#f0f4f7;}
+#topnav .tn-divider{width:1px;height:20px;background:#e8ecf0;flex-shrink:0;}
+#topnav .tn-link{font-size:13px;color:#32536a;cursor:pointer;padding:4px 10px;border-radius:6px;white-space:nowrap;}
+#topnav .tn-link:hover{background:#f0f4f7;}
+#topnav .tn-link .tn-arrow{font-size:9px;margin-left:3px;}
+#topnav .tn-upgrade{background:#9a27d5;color:#fff;border:none;border-radius:20px;padding:6px 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;}
+#topnav .tn-upgrade:hover{background:#8620c0;}
+#topnav .tn-search{flex:1;max-width:400px;background:#f0f4f7;border:1px solid #dde3ea;border-radius:20px;display:flex;align-items:center;padding:6px 14px;gap:8px;}
+#topnav .tn-search input{border:none;background:transparent;font-size:13px;color:#131720;outline:none;flex:1;}
+#topnav .tn-search input::placeholder{color:#9fa8b3;}
+#topnav .tn-actions{display:flex;align-items:center;gap:4px;margin-left:auto;}
+#topnav .tn-icon-btn{width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:50%;cursor:pointer;color:#32536a;position:relative;}
+#topnav .tn-icon-btn:hover{background:#f0f4f7;}
+#topnav .tn-avatar{width:32px;height:32px;border-radius:50%;overflow:hidden;cursor:pointer;background:#e8ecf0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;}
+#topnav .tn-ai-btn{background:#000;color:#fff;border-radius:20px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;border:none;}
+#promo-banner{background:#5999ff;color:#fff;display:flex;align-items:center;justify-content:center;gap:12px;padding:10px 16px;font-size:13px;position:relative;flex-shrink:0;}
+#promo-banner .pb-text{font-weight:400;}
+#promo-banner .pb-btn{background:rgba(0,0,0,0.25);color:#fff;border:none;border-radius:20px;padding:6px 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;}
+#promo-banner .pb-btn:hover{background:rgba(0,0,0,0.35);}
+#promo-banner .pb-close{position:absolute;right:16px;top:50%;transform:translateY(-50%);cursor:pointer;opacity:0.8;background:none;border:none;color:#fff;font-size:16px;line-height:1;}
+#body-wrap{display:flex;flex:1;min-height:0;}
+#sidebar{width:232px;min-width:232px;background:#131720;display:flex;flex-direction:column;height:calc(100vh - 48px);position:sticky;top:48px;overflow-y:auto;overflow-x:hidden;flex-shrink:0;}
+#sidebar::-webkit-scrollbar{width:4px;}
+#sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.15);border-radius:2px;}
+#sidebar .sb-top{padding:12px 16px;border-bottom:1px solid rgba(255,255,255,0.08);}
+#sidebar .sb-setup-card{display:flex;align-items:flex-start;justify-content:space-between;cursor:pointer;padding:8px 0;}
+#sidebar .sb-setup-card:hover{opacity:0.85;}
+#sidebar .sb-setup-title{font-size:14px;font-weight:700;color:#fff;line-height:1.3;}
+#sidebar .sb-setup-sub{font-size:12px;color:rgba(207,208,210,0.7);margin-top:4px;}
+#sidebar .sb-setup-arrow{color:#cfcfd2;font-size:11px;margin-top:2px;flex-shrink:0;}
+#sidebar .sb-progress-bar-wrap{height:3px;background:rgba(255,255,255,0.15);border-radius:2px;margin-top:8px;}
+#sidebar .sb-progress-bar{height:3px;background:#5999ff;border-radius:2px;width:0%;}
+#sidebar .sb-quick-actions{margin:8px 0;display:flex;align-items:center;justify-content:space-between;}
+#sidebar .sb-qa-btn{background:#fff;color:#131720;border:none;border-radius:20px;padding:7px 14px;font-size:13px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:6px;flex:1;}
+#sidebar .sb-qa-btn:hover{background:#f0f4f7;}
+#sidebar .sb-collapse-btn{width:28px;height:28px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);background:transparent;color:#cfcfd2;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;}
+#sidebar .sb-collapse-btn:hover{background:rgba(255,255,255,0.08);}
+#sidebar .sb-nav{padding:8px 0;}
+.sb-item{display:flex;align-items:center;gap:10px;padding:0 16px;cursor:pointer;height:36px;color:#cfcfd2;font-size:14px;font-weight:530;transition:background 0.1s;position:relative;text-decoration:none;}
+.sb-item:hover{background:#1f222b;}
+.sb-item.active{background:#42454c;color:#cfcfd2;}
+.sb-item.parent-open{background:#1f222b;}
+.sb-item .sbi-icon{width:16px;height:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;opacity:0.75;}
+.sb-item .sbi-label{flex:1;font-size:14px;}
+.sb-item .sbi-badge{background:#f5a623;color:#000;font-size:10px;font-weight:700;padding:2px 6px;border-radius:3px;letter-spacing:0.5px;}
+.sb-item .sbi-arrow{font-size:10px;color:#9fa8b3;transition:transform 0.2s;flex-shrink:0;}
+.sb-item .sbi-arrow.open{transform:rotate(90deg);}
+.sb-submenu{overflow:hidden;}
+.sb-subitem{display:flex;align-items:center;padding:0 16px 0 42px;height:32px;cursor:pointer;color:#9fa8b3;font-size:12px;font-weight:530;transition:background 0.1s;}
+.sb-subitem:hover{background:#1f222b;color:#cfcfd2;}
+.sb-subitem.active{background:#42454c;color:#cfcfd2;}
+.sb-subitem .ssi-arrow{font-size:9px;margin-left:auto;color:#6b7280;}
+#sidebar .sb-divider{height:1px;background:rgba(255,255,255,0.08);margin:4px 0;}
+#sidebar .sb-design-site{position:sticky;bottom:0;background:#131720;border-top:1px solid rgba(255,255,255,0.08);padding:12px 16px;}
+#sidebar .sb-design-site a{display:flex;align-items:center;gap:8px;color:#cfcfd2;font-size:13px;font-weight:530;text-decoration:none;cursor:pointer;}
+#sidebar .sb-design-site a:hover{color:#fff;}
+#main{flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden;}
+#page-content{padding:24px 32px;overflow-y:auto;flex:1;}
+.page-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.page-hdr h1{font-size:24px;font-weight:700;color:#131720;}
+.btn-primary{background:#116dff;color:#fff;border:none;border-radius:20px;padding:8px 20px;font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.btn-primary:hover{background:#0f62e6;}
+.btn-secondary{background:#fff;color:#32536a;border:1px solid #dde3ea;border-radius:20px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;}
+.btn-secondary:hover{background:#f7f8fa;}
+.stats-bar{background:#fff;border-radius:8px;padding:14px 20px;display:flex;align-items:center;gap:24px;margin-bottom:16px;border:1px solid #e8ecf0;}
+.stats-bar .stat-item{display:flex;align-items:center;gap:8px;font-size:14px;color:#32536a;}
+.stats-bar .stat-item .stat-val{font-weight:700;color:#131720;}
+.stats-bar .stat-item .stat-pct{font-size:12px;color:#9fa8b3;}
+.stats-bar .stat-divider{width:1px;height:20px;background:#e8ecf0;}
+.stats-bar .stat-date{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.stats-bar .stat-date-btn{font-size:13px;color:#116dff;cursor:pointer;display:flex;align-items:center;gap:4px;font-weight:600;}
+.stats-bar .stat-analytics-link{font-size:13px;color:#116dff;cursor:pointer;font-weight:600;text-decoration:none;}
+.tbl-toolbar{background:#fff;border-radius:8px 8px 0 0;padding:10px 16px;display:flex;align-items:center;gap:12px;border:1px solid #e8ecf0;border-bottom:none;}
+.tbl-toolbar .tt-view-select{display:flex;align-items:center;gap:6px;padding:6px 12px;border:1px solid #dde3ea;border-radius:20px;font-size:13px;cursor:pointer;color:#131720;background:#fff;white-space:nowrap;}
+.tbl-toolbar .tt-view-select:hover{background:#f7f8fa;}
+.tbl-toolbar .tt-count{font-size:13px;color:#9fa8b3;background:#f0f4f7;border-radius:10px;padding:1px 7px;}
+.tbl-toolbar .tt-manage-view{font-size:13px;color:#116dff;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:4px;}
+.tbl-toolbar .tt-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+.tbl-toolbar .tt-filter-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;border:1px solid #dde3ea;border-radius:20px;font-size:13px;cursor:pointer;color:#32536a;background:#fff;}
+.tbl-toolbar .tt-filter-btn:hover{background:#f7f8fa;}
+.tbl-toolbar .tt-cols-btn{width:32px;height:32px;border:1px solid #dde3ea;border-radius:6px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#32536a;background:#fff;}
+.tbl-toolbar .tt-cols-btn:hover{background:#f7f8fa;}
+.tbl-toolbar .tt-search{display:flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid #dde3ea;border-radius:20px;font-size:13px;background:#fff;min-width:200px;}
+.tbl-toolbar .tt-search input{border:none;outline:none;font-size:13px;color:#131720;background:transparent;flex:1;}
+.tbl-toolbar .tt-search input::placeholder{color:#9fa8b3;}
+.tbl-container{background:#fff;border:1px solid #e8ecf0;border-radius:0 0 8px 8px;overflow:hidden;}
+table{width:100%;border-collapse:collapse;}
+table th{text-align:left;font-size:12px;font-weight:600;color:#9fa8b3;padding:10px 16px;border-bottom:1px solid #e8ecf0;white-space:nowrap;background:#fff;}
+table td{padding:12px 16px;border-bottom:1px solid #f0f4f7;font-size:13px;color:#131720;vertical-align:middle;}
+table tr:last-child td{border-bottom:none;}
+table tr:hover td{background:#f9fafb;}
+table th input[type=checkbox],table td input[type=checkbox]{width:15px;height:15px;cursor:pointer;}
+.bdg{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap;}
+.bdg.ok{background:#e9f8f0;color:#1b8a4e;}
+.bdg.warn{background:#fff8e6;color:#a8690a;}
+.bdg.bad{background:#fef0f0;color:#c0392b;}
+.bdg.gray{background:#f0f4f7;color:#32536a;}
+.bdg.blue{background:#e8f1ff;color:#0f62e6;}
+.bdg.purple{background:#f5eeff;color:#7c3aed;}
+.cards-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:20px;}
+.card{background:#fff;border-radius:8px;padding:20px;border:1px solid #e8ecf0;}
+.card .card-label{font-size:12px;color:#9fa8b3;margin-bottom:10px;font-weight:500;}
+.card .card-value{font-size:28px;font-weight:700;color:#131720;}
+.card .card-sub{font-size:12px;color:#1b8a4e;margin-top:6px;font-weight:500;}
+.card .card-sub.neg{color:#c0392b;}
+.card .card-sub.neutral{color:#9fa8b3;}
+.widget{background:#fff;border-radius:8px;border:1px solid #e8ecf0;margin-bottom:16px;}
+.widget-hdr{padding:14px 20px;border-bottom:1px solid #f0f4f7;display:flex;align-items:center;justify-content:space-between;}
+.widget-hdr h3{font-size:14px;font-weight:700;color:#131720;}
+.widget-hdr a{font-size:13px;color:#116dff;text-decoration:none;font-weight:500;}
+.widget-body{padding:16px 20px;}
+.act-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #f0f4f7;}
+.act-item:last-child{border-bottom:none;}
+.act-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+.act-info{flex:1;}
+.act-name{font-size:13px;font-weight:600;color:#131720;}
+.act-desc{font-size:12px;color:#9fa8b3;margin-top:2px;}
+.act-time{font-size:11px;color:#b4bec8;white-space:nowrap;}
+.setup-list{list-style:none;}
+.setup-item{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #f0f4f7;cursor:pointer;}
+.setup-item:hover .stxt h4{color:#116dff;}
+.setup-item .sck{width:22px;height:22px;border-radius:50%;border:2px solid #dde3ea;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.setup-item.done .sck{background:#1b8a4e;border-color:#1b8a4e;color:#fff;}
+.setup-item .stxt{flex:1;}
+.setup-item .stxt h4{font-size:13px;font-weight:600;color:#131720;transition:color 0.15s;}
+.setup-item .stxt p{font-size:12px;color:#9fa8b3;margin-top:2px;}
+.setup-item .sarr{color:#b4bec8;font-size:10px;}
+.pbar-wrap{background:#e8ecf0;border-radius:20px;height:4px;margin:10px 0;}
+.pbar{background:#116dff;border-radius:20px;height:4px;}
+.ag{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:20px;}
+.ac{background:#fff;border-radius:8px;padding:18px;border:1px solid #e8ecf0;}
+.ac .acl{font-size:12px;color:#9fa8b3;margin-bottom:6px;font-weight:500;}
+.ac .acv{font-size:22px;font-weight:700;color:#131720;}
+.ac .acc{font-size:12px;color:#1b8a4e;margin-top:4px;font-weight:500;}
+.chart-box{background:#fff;border-radius:8px;border:1px solid #e8ecf0;padding:20px;margin-bottom:16px;}
+.chart-box h3{font-size:14px;font-weight:700;color:#131720;margin-bottom:16px;}
+.bars{display:flex;align-items:flex-end;gap:6px;height:120px;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.bar-fill{width:100%;background:#116dff;border-radius:3px 3px 0 0;min-height:3px;}
+.bar-lbl{font-size:10px;color:#9fa8b3;}
+.empty-pg{text-align:center;padding:60px 20px;color:#9fa8b3;}
+.empty-pg .eico{font-size:48px;margin-bottom:16px;}
+.empty-pg h3{font-size:18px;font-weight:700;color:#131720;margin-bottom:8px;}
+.empty-pg p{font-size:14px;max-width:300px;margin:0 auto;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.pimg{width:36px;height:36px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:18px;background:#f0f4f7;flex-shrink:0;}
+.cav{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+.ord-tabs{display:flex;border-bottom:2px solid #e8ecf0;margin-bottom:16px;}
+.ot{padding:10px 16px;font-size:13px;cursor:pointer;color:#9fa8b3;border-bottom:2px solid transparent;margin-bottom:-2px;font-weight:500;}
+.ot:hover{color:#131720;}
+.ot.active{color:#116dff;border-bottom-color:#116dff;font-weight:600;}
+.fbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+.fbar input{flex:1;padding:8px 14px;border:1px solid #dde3ea;border-radius:20px;font-size:13px;outline:none;background:#fff;}
+.fbar input:focus{border-color:#116dff;}
+.fbar .fbar-btn{padding:8px 16px;border:1px solid #dde3ea;background:#fff;border-radius:20px;font-size:13px;cursor:pointer;color:#32536a;white-space:nowrap;}
+.fbar .fbar-btn:hover{background:#f7f8fa;}
+.acell{display:flex;gap:6px;}
+.acell button{padding:5px 12px;font-size:12px;border:1px solid #dde3ea;background:#fff;border-radius:20px;cursor:pointer;color:#32536a;font-weight:500;}
+.acell button:hover{background:#f7f8fa;}
+.siteinfo-bar{background:#fffbea;border:1px solid #f5e6a0;border-radius:8px;padding:10px 16px;display:flex;align-items:center;gap:16px;margin-bottom:20px;font-size:13px;color:#6b5700;}
+.siteinfo-bar .si-tag{background:#fff3c4;border:1px solid #f5e6a0;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:700;color:#6b5700;text-transform:uppercase;}
+.siteinfo-bar a{color:#116dff;text-decoration:none;font-weight:500;}
+.siteinfo-bar .si-sep{color:#dde3ea;}
+@media(max-width:900px){.two-col{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div id="app"><nav id="topnav"><div class="wix-logo">WIX</div><div class="tn-site">My Site <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></div><div class="tn-divider"></div><span class="tn-link">Explore <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></span><span class="tn-link">Hire a Professional</span><span class="tn-link">Help <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></span><button class="tn-upgrade">Upgrade</button><div class="tn-search"><span style="color:#9fa8b3;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></span><input placeholder="Search for tools, apps &amp; more..." readonly=""></div><div class="tn-actions"><div class="tn-icon-btn" title="Inbox"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"></path></svg></div><div class="tn-icon-btn" title="Notifications"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 01-3.46 0"></path></svg></div><div class="tn-icon-btn" title="Bookmarks" style="font-size:16px">☷</div><div class="tn-avatar" title="Account" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-size:12px;font-weight:700;">AW</div></div><button class="tn-ai-btn"><span style="font-size:14px">✨</span> AI</button></nav><div id="promo-banner"><span class="pb-text">Complete your AI Marketing Agent setup to maximize your traffic across channels.</span><button class="pb-btn">Finish Setup</button><button class="pb-close" id="dismiss-banner" title="Close">×</button></div><div id="body-wrap"><aside id="sidebar"><div class="sb-top"><div class="sb-setup-card" data-nid="setup" data-page="setup"><div><div class="sb-setup-title">Let's set up your business</div><div class="sb-setup-sub">0/8 completed</div></div><span class="sb-setup-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div><div class="sb-progress-bar-wrap"><div class="sb-progress-bar" style="width:0%"></div></div><div class="sb-quick-actions"><button class="sb-qa-btn"><span style="font-size:16px;margin-right:2px">✎</span> Quick Actions <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></button><button class="sb-collapse-btn">‹</button></div></div><nav class="sb-nav"><div class="sb-item" data-nid="setup" data-page="setup"><span class="sbi-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18.36 6.64a9 9 0 11-12.73 0"></path><line x1="12" y1="2" x2="12" y2="12"></line></svg></span><span class="sbi-label">Setup</span></div><div class="sb-item" data-nid="home" data-page="home"><span class="sbi-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></span><span class="sbi-label">Home</span></div><div class="sb-item" data-nid="ai" data-page="ai"><span class="sbi-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"></path></svg></span><span class="sbi-label">AI Agents</span><span class="sbi-badge">NEW</span></div><div class="sb-item" data-nid="paid" data-ch="1"><span class="sbi-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="14" rx="2"></rect><path d="M2 10h20M6 14h4"></path></svg></span><span class="sbi-label">Getting Paid</span><span class="sbi-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div><div class="sb-item parent-open" data-nid="sales" data-ch="1"><span class="sbi-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg></span><span class="sbi-label">Sales</span><span class="sbi-arrow open"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div><div class="sb-submenu"><div class="sb-subitem active" data-nid="sales-orders" data-page="orders">Orders</div><div class="sb-subitem" data-nid="sales-subs" data-page="generic">Subscriptions</div><div class="sb-subitem" data-nid="sales-gift" data-page="generic">Gift Card Sales</div><div class="sb-subitem" data-nid="sales-payments" data-page="generic">Payments &amp; Finances<span class="ssi-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div><div class="sb-subitem" data-nid="sales-analytics" data-page="analytics">Analytics<span class="ssi-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div><div class="sb-subitem" data-nid="sales-abandoned" data-page="generic">Abandoned Carts</div></div><div class="sb-item" data-nid="catalog" data-ch="1"><span class="sbi-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 01-8 0"></path></svg></span><span class="sbi-label">Catalog</span><span class="sbi-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div><div class="sb-item" data-nid="blog" data-ch="1"><span class="sbi-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></span><span class="sbi-label">Blog</span><span class="sbi-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div><div class="sb-item" data-nid="apps" data-ch="1"><span class="sbi-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="9" height="9" rx="1"></rect><rect x="13" y="2" width="9" height="9" rx="1"></rect><rect x="2" y="13" width="9" height="9" rx="1"></rect><rect x="13" y="13" width="9" height="9" rx="1"></rect></svg></span><span class="sbi-label">Apps</span><span class="sbi-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div><div class="sb-divider"></div><div class="sb-item" data-nid="site" data-ch="1"><span class="sbi-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"></rect><polyline points="8 21 12 17 16 21"></polyline></svg></span><span class="sbi-label">Site &amp; Mobile App</span><span class="sbi-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div><div class="sb-item" data-nid="marketing" data-ch="1"><span class="sbi-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg></span><span class="sbi-label">Marketing</span><span class="sbi-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div><div class="sb-item" data-nid="inbox" data-page="inbox"><span class="sbi-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></span><span class="sbi-label">Inbox</span></div><div class="sb-item" data-nid="customers" data-ch="1"><span class="sbi-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41"></path></svg></span><span class="sbi-label">Customers &amp; Leads</span><span class="sbi-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div><div class="sb-item" data-nid="analytics" data-ch="1"><span class="sbi-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span><span class="sbi-label">Analytics</span><span class="sbi-arrow"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"></polyline></svg></span></div></nav><div class="sb-design-site"><a href="#" onclick="return false"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4z"></path></svg> Design Site</a></div></aside><div id="main"><div id="page-content"><div class="page-hdr"><h1>Orders</h1><button class="btn-primary"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Add New Order</button></div><div class="stats-bar"><div class="stat-item">Sales <span class="stat-val">₪0</span> <span class="stat-pct">0%</span></div><div class="stat-divider"></div><div class="stat-item">Orders <span class="stat-val">0</span> <span class="stat-pct">0%</span></div><div class="stat-divider"></div><div class="stat-item">Avg. order value <span class="stat-val">₪0</span> <span class="stat-pct">0%</span></div><div class="stat-date"><span class="stat-date-btn">Last 30 days <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></span><span style="color:#dde3ea">|</span><a class="stat-analytics-link" href="#">Go to Analytics</a></div></div><div class="tbl-toolbar"><div class="tt-view-select">All items <span class="tt-count">7</span> <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></div><span style="color:#dde3ea;font-size:18px;margin:0 2px">|</span><div class="tt-manage-view">Manage View <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg></div><div class="tt-right"><div class="tt-filter-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg> Filter</div><div class="tt-cols-btn"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg></div><div class="tt-search"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg> <input placeholder="Search..." readonly=""></div></div></div><div class="ord-tabs"><div class="ot active" data-otab="all">All items</div><div class="ot" data-otab="not-fulfilled">Not Fulfilled</div><div class="ot" data-otab="fulfilled">Fulfilled</div><div class="ot" data-otab="cancelled">Cancelled</div></div><div class="tbl-container"><table><thead><tr><th style="width:36px"><input type="checkbox"></th><th>Order</th><th>Date</th><th>Customer</th><th>Payment</th><th>Fulfillment</th><th>Items</th><th>Total</th><th></th></tr></thead><tbody><tr><td><input type="checkbox"></td><td style="font-weight:600;color:#116dff;cursor:pointer">#1001</td><td style="color:#9fa8b3">May 20, 2026</td><td style="font-weight:500">Stuart Farley</td><td><span class="bdg ok">Paid</span></td><td><span class="bdg warn">In Progress</span></td><td style="color:#9fa8b3">2</td><td style="font-weight:600">₪350</td><td><div class="acell"><button>View</button></div></td></tr><tr><td><input type="checkbox"></td><td style="font-weight:600;color:#116dff;cursor:pointer">#1002</td><td style="color:#9fa8b3">May 18, 2026</td><td style="font-weight:500">Kat Jones</td><td><span class="bdg ok">Paid</span></td><td><span class="bdg ok">Fulfilled</span></td><td style="color:#9fa8b3">1</td><td style="font-weight:600">₪270</td><td><div class="acell"><button>View</button></div></td></tr><tr><td><input type="checkbox"></td><td style="font-weight:600;color:#116dff;cursor:pointer">#1003</td><td style="color:#9fa8b3">May 15, 2026</td><td style="font-weight:500">Susie Bievins</td><td><span class="bdg ok">Paid</span></td><td><span class="bdg ok">Fulfilled</span></td><td style="color:#9fa8b3">3</td><td style="font-weight:600">₪465</td><td><div class="acell"><button>View</button></div></td></tr><tr><td><input type="checkbox"></td><td style="font-weight:600;color:#116dff;cursor:pointer">#1004</td><td style="color:#9fa8b3">May 12, 2026</td><td style="font-weight:500">Adam Walker</td><td><span class="bdg bad">Refunded</span></td><td><span class="bdg bad">Cancelled</span></td><td style="color:#9fa8b3">1</td><td style="font-weight:600">₪690</td><td><div class="acell"><button>View</button></div></td></tr><tr><td><input type="checkbox"></td><td style="font-weight:600;color:#116dff;cursor:pointer">#1005</td><td style="color:#9fa8b3">May 10, 2026</td><td style="font-weight:500">Dan Klein</td><td><span class="bdg ok">Paid</span></td><td><span class="bdg ok">Fulfilled</span></td><td style="color:#9fa8b3">2</td><td style="font-weight:600">₪388</td><td><div class="acell"><button>View</button></div></td></tr><tr><td><input type="checkbox"></td><td style="font-weight:600;color:#116dff;cursor:pointer">#1006</td><td style="color:#9fa8b3">May 8, 2026</td><td style="font-weight:500">Lea Cohen</td><td><span class="bdg warn">Pending</span></td><td><span class="bdg gray">Not Fulfilled</span></td><td style="color:#9fa8b3">1</td><td style="font-weight:600">₪119</td><td><div class="acell"><button>View</button></div></td></tr><tr><td><input type="checkbox"></td><td style="font-weight:600;color:#116dff;cursor:pointer">#1007</td><td style="color:#9fa8b3">May 5, 2026</td><td style="font-weight:500">Noa Bar</td><td><span class="bdg ok">Paid</span></td><td><span class="bdg ok">Fulfilled</span></td><td style="color:#9fa8b3">4</td><td style="font-weight:600">₪792</td><td><div class="acell"><button>View</button></div></td></tr></tbody></table></div></div></div></div></div>
+<script>
+// ===== ICONS =====
+var ICO={
+  wixLogo: '<span style="font-family:Helvetica Neue,Arial,sans-serif;font-weight:900;font-size:22px;letter-spacing:-1px;color:#000">WIX</span>',
+  home:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>',
+  setup:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18.36 6.64a9 9 0 11-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>',
+  ai:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l2 7h7l-5.5 4 2 7L12 16l-5.5 4 2-7L3 9h7z"/></svg>',
+  paid:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20M6 14h4"/></svg>',
+  sales:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+  catalog:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>',
+  blog:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',
+  apps:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="9" height="9" rx="1"/><rect x="13" y="2" width="9" height="9" rx="1"/><rect x="2" y="13" width="9" height="9" rx="1"/><rect x="13" y="13" width="9" height="9" rx="1"/></svg>',
+  site:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><polyline points="8 21 12 17 16 21"/></svg>',
+  marketing:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>',
+  inbox:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
+  analytics:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
+  settings:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M4.93 4.93l1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M4.93 19.07l1.41-1.41M19.07 19.07l-1.41-1.41"/></svg>',
+  chev:'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>',
+  chevDown:'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>',
+  check:'<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>',
+  search:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+  bell:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>',
+  chat:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>',
+  pen:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4z"/></svg>',
+  filter:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>',
+  cols:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>',
+  plus:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',
+  star:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
+};
+
+// ===== NAV STRUCTURE =====
+var NAV = [
+  {id:"setup", label:"Setup", icon:"setup", page:"setup"},
+  {id:"home", label:"Home", icon:"home", page:"home"},
+  {id:"ai", label:"AI Agents", icon:"ai", page:"ai", badge:"NEW"},
+  {id:"paid", label:"Getting Paid", icon:"paid", children:[
+    {id:"paid-setup",label:"Connect & Setup",page:"generic"},
+    {id:"paid-links",label:"Pay Links",page:"generic"},
+    {id:"paid-invoices",label:"Invoices",page:"generic"},
+    {id:"paid-quotes",label:"Price Quotes",page:"generic"},
+    {id:"paid-proposals",label:"Proposals",page:"generic"},
+    {id:"paid-pos",label:"POS Checkout",page:"generic"}
+  ]},
+  {id:"sales", label:"Sales", icon:"sales", children:[
+    {id:"sales-orders",label:"Orders",page:"orders"},
+    {id:"sales-subs",label:"Subscriptions",page:"generic"},
+    {id:"sales-gift",label:"Gift Card Sales",page:"generic"},
+    {id:"sales-payments",label:"Payments & Finances",page:"generic",hasArrow:true},
+    {id:"sales-analytics",label:"Analytics",page:"analytics",hasArrow:true},
+    {id:"sales-abandoned",label:"Abandoned Carts",page:"generic"}
+  ]},
+  {id:"catalog", label:"Catalog", icon:"catalog", children:[
+    {id:"cat-products",label:"Products",page:"products"},
+    {id:"cat-inventory",label:"Inventory",page:"inventory"},
+    {id:"cat-categories",label:"Categories",page:"generic"},
+    {id:"cat-backstock",label:"Back in Stock Requests",page:"generic"},
+    {id:"cat-filters",label:"Option & Modifier Filters",page:"generic"},
+    {id:"cat-find",label:"Find Products to Sell",page:"generic"},
+    {id:"cat-promo",label:"Promo Cards",page:"generic"},
+    {id:"cat-giftcards",label:"Gift Cards",page:"generic"},
+    {id:"cat-discounts",label:"Discounts",page:"generic"},
+    {id:"cat-channels",label:"Sales Channels",page:"generic"}
+  ]},
+  {id:"blog", label:"Blog", icon:"blog", children:[
+    {id:"blog-posts",label:"Posts",page:"blog"},
+    {id:"blog-cats",label:"Categories",page:"generic"},
+    {id:"blog-tags",label:"Tags",page:"generic"}
+  ]},
+  {id:"apps", label:"Apps", icon:"apps", children:[
+    {id:"apps-market",label:"App Market",page:"generic"},
+    {id:"apps-installed",label:"Installed Apps",page:"generic"}
+  ]},
+  {id:"__divider1__", divider:true},
+  {id:"site", label:"Site & Mobile App", icon:"site", children:[
+    {id:"site-pages",label:"Pages & Menu",page:"generic"},
+    {id:"site-editor",label:"Open Editor",page:"generic"},
+    {id:"site-mobile",label:"Branded App",page:"generic"}
+  ]},
+  {id:"marketing", label:"Marketing", icon:"marketing", children:[
+    {id:"mkt-email",label:"Email Campaigns",page:"marketing"},
+    {id:"mkt-social",label:"Social Posts",page:"generic"},
+    {id:"mkt-ads",label:"Google Ads",page:"generic"},
+    {id:"mkt-seo",label:"SEO Tools",page:"generic"}
+  ]},
+  {id:"inbox", label:"Inbox", icon:"inbox", page:"inbox"},
+  {id:"customers", label:"Customers & Leads", icon:"settings", children:[
+    {id:"cust-contacts",label:"Contacts",page:"contacts"},
+    {id:"cust-forms",label:"Forms & Submissions",page:"generic"},
+    {id:"cust-meetings",label:"Meetings",page:"generic"},
+    {id:"cust-loyalty",label:"Loyalty Program",page:"generic"}
+  ]},
+  {id:"analytics", label:"Analytics", icon:"analytics", children:[
+    {id:"ana-highlights",label:"Highlights",page:"analytics"},
+    {id:"ana-realtime",label:"Real-time",page:"analytics"},
+    {id:"ana-traffic",label:"Traffic",page:"analytics"},
+    {id:"ana-behavior",label:"Behavior",page:"analytics"}
+  ]}
+];
+
+// ===== STATE =====
+var ST = {page:"home", activeNav:"home", openMenus:{sales:true, "sales-orders":true}, orderTab:"all", promoBannerVisible:true};
+
+// ===== ROUTER =====
+function nav(page, id) {ST.page=page; if(id)ST.activeNav=id; renderApp();}
+function toggleMenu(id,e) {if(e)e.stopPropagation(); ST.openMenus[id]=!ST.openMenus[id]; renderApp();}
+function dismissBanner() {ST.promoBannerVisible=false; renderApp();}
+function renderApp() {var a=document.getElementById("app"); if(!a)return; a.innerHTML=buildApp(); bind();}
+function bind() {
+  document.querySelectorAll("[data-nid]").forEach(function(el) {
+    el.addEventListener("click", function(e) {
+      var page=el.getAttribute("data-page");
+      var id=el.getAttribute("data-nid");
+      var hasCh=el.getAttribute("data-ch");
+      if(hasCh){toggleMenu(id,e);}
+      else if(page){nav(page,id);}
+    });
+  });
+  document.querySelectorAll("[data-otab]").forEach(function(el) {
+    el.addEventListener("click", function(){ST.orderTab=el.getAttribute("data-otab");renderApp();});
+  });
+  var pb=document.getElementById("dismiss-banner");
+  if(pb)pb.addEventListener("click",dismissBanner);
+}
+
+// ===== APP SHELL =====
+function buildApp() {
+  var parts = [];
+  parts.push(buildTopNav());
+  if(ST.promoBannerVisible) parts.push(buildPromoBanner());
+  parts.push('<div id="body-wrap">');
+  parts.push(buildSidebar());
+  parts.push('<div id="main"><div id="page-content">' + buildPage() + '</div></div>');
+  parts.push('</div>');
+  return parts.join("");
+}
+
+// ===== TOP NAV =====
+function buildTopNav() {
+  return '<nav id="topnav">'
+  + '<div class="wix-logo">WIX</div>'
+  + '<div class="tn-site">My Site ' + ICO.chevDown + '</div>'
+  + '<div class="tn-divider"></div>'
+  + '<span class="tn-link">Explore ' + ICO.chevDown + '</span>'
+  + '<span class="tn-link">Hire a Professional</span>'
+  + '<span class="tn-link">Help ' + ICO.chevDown + '</span>'
+  + '<button class="tn-upgrade">Upgrade</button>'
+  + '<div class="tn-search"><span style="color:#9fa8b3;flex-shrink:0">' + ICO.search + '</span><input placeholder="Search for tools, apps &amp; more..." readonly></div>'
+  + '<div class="tn-actions">'
+  + '<div class="tn-icon-btn" title="Inbox">' + ICO.chat + '</div>'
+  + '<div class="tn-icon-btn" title="Notifications">' + ICO.bell + '</div>'
+  + '<div class="tn-icon-btn" title="Bookmarks" style="font-size:16px">&#9783;</div>'
+  + '<div class="tn-avatar" title="Account" style="background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;font-size:12px;font-weight:700;">AW</div>'
+  + '</div>'
+  + '<button class="tn-ai-btn"><span style="font-size:14px">✨</span> AI</button>'
+  + '</nav>';
+}
+
+// ===== PROMO BANNER =====
+function buildPromoBanner() {
+  return '<div id="promo-banner">'
+  + '<span class="pb-text">Complete your AI Marketing Agent setup to maximize your traffic across channels.</span>'
+  + '<button class="pb-btn">Finish Setup</button>'
+  + '<button class="pb-close" id="dismiss-banner" title="Close">&times;</button>'
+  + '</div>';
+}
+
+// ===== SIDEBAR =====
+function buildSidebar() {
+  var h = [];
+  h.push('<aside id="sidebar">');
+  // Top: setup card + quick actions
+  h.push('<div class="sb-top">');
+  h.push('<div class="sb-setup-card" data-nid="setup" data-page="setup">'
+    + '<div><div class="sb-setup-title">Let&#39;s set up your business</div><div class="sb-setup-sub">0/8 completed</div></div>'
+    + '<span class="sb-setup-arrow">' + ICO.chev + '</span>'
+    + '</div>');
+  h.push('<div class="sb-progress-bar-wrap"><div class="sb-progress-bar" style="width:0%"></div></div>');
+  h.push('<div class="sb-quick-actions">'
+    + '<button class="sb-qa-btn"><span style="font-size:16px;margin-right:2px">&#9998;</span> Quick Actions ' + ICO.chevDown + '</button>'
+    + '<button class="sb-collapse-btn">&lsaquo;</button>'
+    + '</div>');
+  h.push('</div>'); // sb-top
+  // Nav items
+  h.push('<nav class="sb-nav">');
+  NAV.forEach(function(item) {
+    if(item.divider) { h.push('<div class="sb-divider"></div>'); return; }
+    var isAct = ST.activeNav===item.id;
+    var isOpen = ST.openMenus[item.id];
+    var parentOpen = isOpen ? " parent-open" : "";
+    var actCls = isAct ? " active" : "";
+    if(item.children) {
+      h.push('<div class="sb-item' + actCls + parentOpen + '" data-nid="' + item.id + '" data-ch="1">'
+        + '<span class="sbi-icon">' + ICO[item.icon] + '</span>'
+        + '<span class="sbi-label">' + item.label + '</span>'
+        + (item.badge ? '<span class="sbi-badge">' + item.badge + '</span>' : "")
+        + '<span class="sbi-arrow' + (isOpen?" open":"") + '">' + ICO.chev + '</span>'
+        + '</div>');
+      if(isOpen) {
+        h.push('<div class="sb-submenu">');
+        item.children.forEach(function(c) {
+          var cAct = ST.activeNav===c.id ? " active" : "";
+          h.push('<div class="sb-subitem' + cAct + '" data-nid="' + c.id + '" data-page="' + c.page + '">'
+            + c.label
+            + (c.hasArrow ? '<span class="ssi-arrow">' + ICO.chev + '</span>' : "")
+            + '</div>');
+        });
+        h.push('</div>');
+      }
+    } else {
+      h.push('<div class="sb-item' + actCls + '" data-nid="' + item.id + '" data-page="' + item.page + '">'
+        + '<span class="sbi-icon">' + ICO[item.icon] + '</span>'
+        + '<span class="sbi-label">' + item.label + '</span>'
+        + (item.badge ? '<span class="sbi-badge">' + item.badge + '</span>' : "")
+        + '</div>');
+    }
+  });
+  h.push('</nav>');
+  // Design Site footer
+  h.push('<div class="sb-design-site"><a href="#" onclick="return false">' + ICO.pen + ' Design Site</a></div>');
+  h.push('</aside>');
+  return h.join("");
+}
+
+// ===== PAGE ROUTER =====
+function buildPage() {
+  var map = {home:pgHome, setup:pgSetup, products:pgProducts, orders:pgOrders, contacts:pgContacts, analytics:pgAnalytics, inbox:pgInbox, inventory:pgInventory, marketing:pgMarketing, ai:pgAI, blog:pgBlog, generic:pgGeneric};
+  return (map[ST.page]||pgGeneric)();
+}
+
+// ===== HOME PAGE =====
+function pgHome() {
+  var h = [];
+  h.push('<div class="siteinfo-bar"><span class="si-tag">FREE</span><a href="#">https://mailadamwalker.wixsite.com/my-site</a><span class="si-sep">|</span><span>No business email</span><span class="si-sep">|</span><a href="#">Edit Business Info</a></div>');
+  h.push('<div class="cards-row">');
+  var cards = [{l:"Site Sessions",v:"0",s:"+0% vs last month",cls:""},{l:"Total Sales",v:"₪0",s:"No sales yet",cls:" neutral"},{l:"New Contacts",v:"2",s:"+100% vs last month",cls:""},{l:"Page Views",v:"0",s:"No data yet",cls:" neutral"}];
+  cards.forEach(function(c) {
+    h.push('<div class="card"><div class="card-label">' + c.l + '</div><div class="card-value">' + c.v + '</div><div class="card-sub' + c.cls + '">' + c.s + '</div></div>');
+  });
+  h.push('</div><div class="two-col">');
+  // Activity
+  h.push('<div class="widget"><div class="widget-hdr"><h3>Recent Activity</h3><a href="#">View All</a></div><div class="widget-body">');
+  [{n:"Stuart Farley",d:"Submitted a contact form",t:"2h ago",c:"#5999ff",i:"SF"},{n:"Susie Bievins",d:"Viewed a product page",t:"5h ago",c:"#f5a623",i:"SB"},{n:"Kat Jones",d:"Subscribed to newsletter",t:"1d ago",c:"#1b8a4e",i:"KJ"},{n:"Adam Walker",d:"Updated store settings",t:"2d ago",c:"#9a27d5",i:"AW"}].forEach(function(a) {
+    h.push('<div class="act-item"><div class="act-av" style="background:' + a.c + '">' + a.i + '</div><div class="act-info"><div class="act-name">' + a.n + '</div><div class="act-desc">' + a.d + '</div></div><div class="act-time">' + a.t + '</div></div>');
+  });
+  h.push('</div></div>');
+  // Automations
+  h.push('<div class="widget"><div class="widget-hdr"><h3>Suggested Automations</h3><a href="#">See All</a></div><div class="widget-body">');
+  [{n:"Welcome new subscribers",d:"Send a welcome email when someone subscribes"},{n:"Abandoned cart recovery",d:"Remind customers about items left in their cart"},{n:"Birthday discount",d:"Automatically send discount on customer birthdays"},{n:"Order confirmation",d:"Send confirmation email after each purchase"}].forEach(function(a) {
+    h.push('<div class="act-item"><div style="flex:1"><div class="act-name">' + a.n + '</div><div class="act-desc">' + a.d + '</div></div><button class="btn-primary" style="padding:6px 14px;font-size:12px;border-radius:20px">Add</button></div>');
+  });
+  h.push('</div></div></div>');
+  return h.join("");
+}
+
+// ===== SETUP PAGE =====
+function pgSetup() {
+  var h = [];
+  h.push('<div class="page-hdr"><h1>Set Up Your Business</h1></div>');
+  h.push('<div class="widget"><div class="widget-body">');
+  h.push('<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px"><span style="font-size:13px;color:#9fa8b3;font-weight:500">0 of 8 tasks completed</span><span style="font-size:13px;font-weight:600;color:#116dff">0%</span></div>');
+  h.push('<div class="pbar-wrap"><div class="pbar" style="width:0%"></div></div>');
+  h.push('<ul class="setup-list">');
+  ["Connect a custom domain","Set up payments","Add your products","Set your shipping rates","Set up taxes","Add your business logo","Write your store policies","Invite collaborators"].forEach(function(s) {
+    h.push('<li class="setup-item"><div class="sck"></div><div class="stxt"><h4>' + s + '</h4><p>Click to get started</p></div><span class="sarr">' + ICO.chev + '</span></li>');
+  });
+  h.push('</ul></div></div>');
+  return h.join("");
+}
+
+// ===== ORDERS PAGE =====
+function pgOrders() {
+  var ORDERS = [
+    {id:"#1001",c:"Stuart Farley",d:"May 20, 2026",i:2,t:"₪350",pay:"Paid",ful:"In Progress"},
+    {id:"#1002",c:"Kat Jones",d:"May 18, 2026",i:1,t:"₪270",pay:"Paid",ful:"Fulfilled"},
+    {id:"#1003",c:"Susie Bievins",d:"May 15, 2026",i:3,t:"₪465",pay:"Paid",ful:"Fulfilled"},
+    {id:"#1004",c:"Adam Walker",d:"May 12, 2026",i:1,t:"₪690",pay:"Refunded",ful:"Cancelled"},
+    {id:"#1005",c:"Dan Klein",d:"May 10, 2026",i:2,t:"₪388",pay:"Paid",ful:"Fulfilled"},
+    {id:"#1006",c:"Lea Cohen",d:"May 8, 2026",i:1,t:"₪119",pay:"Pending",ful:"Not Fulfilled"},
+    {id:"#1007",c:"Noa Bar",d:"May 5, 2026",i:4,t:"₪792",pay:"Paid",ful:"Fulfilled"}
+  ];
+  var payBadge = {Paid:"ok", Pending:"warn", Refunded:"bad", Unpaid:"bad"};
+  var fulBadge = {Fulfilled:"ok", "In Progress":"warn", "Not Fulfilled":"gray", Cancelled:"bad"};
+  var tabs = [{k:"all",l:"All items"},{k:"not-fulfilled",l:"Not Fulfilled"},{k:"fulfilled",l:"Fulfilled"},{k:"cancelled",l:"Cancelled"}];
+  var filtered = ORDERS.filter(function(o){
+    if(ST.orderTab==="all") return true;
+    if(ST.orderTab==="not-fulfilled") return o.ful==="Not Fulfilled" || o.ful==="In Progress";
+    if(ST.orderTab==="fulfilled") return o.ful==="Fulfilled";
+    if(ST.orderTab==="cancelled") return o.ful==="Cancelled";
+    return true;
+  });
+  var h = [];
+  // Header
+  h.push('<div class="page-hdr"><h1>Orders</h1><button class="btn-primary">' + ICO.plus + ' Add New Order</button></div>');
+  // Stats bar
+  h.push('<div class="stats-bar">'
+    + '<div class="stat-item">Sales <span class="stat-val">₪0</span> <span class="stat-pct">0%</span></div>'
+    + '<div class="stat-divider"></div>'
+    + '<div class="stat-item">Orders <span class="stat-val">0</span> <span class="stat-pct">0%</span></div>'
+    + '<div class="stat-divider"></div>'
+    + '<div class="stat-item">Avg. order value <span class="stat-val">₪0</span> <span class="stat-pct">0%</span></div>'
+    + '<div class="stat-date"><span class="stat-date-btn">Last 30 days ' + ICO.chevDown + '</span><span style="color:#dde3ea">|</span><a class="stat-analytics-link" href="#">Go to Analytics</a></div>'
+    + '</div>');
+  // Table toolbar
+  h.push('<div class="tbl-toolbar">'
+    + '<div class="tt-view-select">All items <span class="tt-count">' + ORDERS.length + '</span> ' + ICO.chevDown + '</div>'
+    + '<span style="color:#dde3ea;font-size:18px;margin:0 2px">|</span>'
+    + '<div class="tt-manage-view">Manage View ' + ICO.chevDown + '</div>'
+    + '<div class="tt-right">'
+    + '<div class="tt-filter-btn">' + ICO.filter + ' Filter</div>'
+    + '<div class="tt-cols-btn">' + ICO.cols + '</div>'
+    + '<div class="tt-search">' + ICO.search + ' <input placeholder="Search..." readonly></div>'
+    + '</div></div>');
+  // Tabs
+  h.push('<div class="ord-tabs">');
+  tabs.forEach(function(t) {
+    var cnt = t.k==="all" ? ORDERS.length : filtered.length;
+    h.push('<div class="ot' + (ST.orderTab===t.k?" active":"") + '" data-otab="' + t.k + '">' + t.l + '</div>');
+  });
+  h.push('</div>');
+  // Table
+  h.push('<div class="tbl-container"><table><thead><tr>'
+    + '<th style="width:36px"><input type="checkbox"></th>'
+    + '<th>Order</th><th>Date</th><th>Customer</th><th>Payment</th><th>Fulfillment</th><th>Items</th><th>Total</th><th></th>'
+    + '</tr></thead><tbody>');
+  filtered.forEach(function(o) {
+    h.push('<tr>'
+      + '<td><input type="checkbox"></td>'
+      + '<td style="font-weight:600;color:#116dff;cursor:pointer">' + o.id + '</td>'
+      + '<td style="color:#9fa8b3">' + o.d + '</td>'
+      + '<td style="font-weight:500">' + o.c + '</td>'
+      + '<td><span class="bdg ' + (payBadge[o.pay]||"gray") + '">' + o.pay + '</span></td>'
+      + '<td><span class="bdg ' + (fulBadge[o.ful]||"gray") + '">' + o.ful + '</span></td>'
+      + '<td style="color:#9fa8b3">' + o.i + '</td>'
+      + '<td style="font-weight:600">' + o.t + '</td>'
+      + '<td><div class="acell"><button>View</button></div></td>'
+      + '</tr>');
+  });
+  h.push('</tbody></table></div>');
+  return h.join("");
+}
+
+// ===== PRODUCTS PAGE =====
+function pgProducts() {
+  var P = [
+    {n:"Ceramic Flower Vase",sk:"CV-001",p:"₪270",st:14,v:1,e:"🏺"},
+    {n:"Minimalist Tote Bag",sk:"TB-002",p:"₪20",st:32,v:2,e:"👜"},
+    {n:"Hydrating Eye Serum",sk:"ES-003",p:"₪56",st:8,v:1,e:"🧪"},
+    {n:"Knitted Golf Sweater",sk:"KS-004",p:"₪275",st:5,v:12,e:"👕"},
+    {n:"Round Eyeglasses",sk:"EG-005",p:"₪80",st:22,v:1,e:"👓"},
+    {n:"Solid Wood Chair",sk:"WC-006",p:"₪690",st:3,v:1,e:"🪑"},
+    {n:"Foaming Facial Cleanser",sk:"FC-007",p:"₪85",st:19,v:4,e:"🧴"},
+    {n:"Baseball Cap",sk:"BC-008",p:"₪68",st:45,v:1,e:"🧢"},
+    {n:"Stainless Steel Water Bottle",sk:"WB-009",p:"₪199",st:27,v:1,e:"🧐"},
+    {n:"Essential Oil Diffuser",sk:"OD-010",p:"₪119",st:11,v:1,e:"🪧"},
+    {n:"Textured Loop Earrings",sk:"LE-011",p:"₪269",st:16,v:1,e:"💍"},
+    {n:"Crew T-Shirt",sk:"CT-012",p:"₪120",st:38,v:4,e:"👕"}
+  ];
+  var h = [];
+  h.push('<div class="page-hdr"><h1>Products</h1><div style="display:flex;gap:10px"><button class="btn-secondary">Import</button><button class="btn-primary">' + ICO.plus + ' Add Product</button></div></div>');
+  h.push('<div class="tbl-toolbar"><div class="tt-view-select">All products <span class="tt-count">' + P.length + '</span> ' + ICO.chevDown + '</div><div class="tt-right"><div class="tt-filter-btn">' + ICO.filter + ' Filter</div><div class="tt-search">' + ICO.search + ' <input placeholder="Search products..." readonly></div></div></div>');
+  h.push('<div class="tbl-container"><table><thead><tr><th style="width:36px"><input type="checkbox"></th><th>Product</th><th>SKU</th><th>Price</th><th>Inventory</th><th>Variants</th><th>Status</th><th></th></tr></thead><tbody>');
+  P.forEach(function(p) {
+    h.push('<tr>'
+      + '<td><input type="checkbox"></td>'
+      + '<td><div style="display:flex;align-items:center;gap:10px"><div class="pimg">' + p.e + '</div><span style="font-weight:500">' + p.n + '</span></div></td>'
+      + '<td style="color:#9fa8b3;font-size:12px">' + p.sk + '</td>'
+      + '<td style="font-weight:600">' + p.p + '</td>'
+      + '<td>' + p.st + ' in stock</td>'
+      + '<td>' + (p.v>1?p.v+" variants":"&mdash;") + '</td>'
+      + '<td><span class="bdg ok">Active</span></td>'
+      + '<td><div class="acell"><button>Edit</button></div></td>'
+      + '</tr>');
+  });
+  h.push('</tbody></table></div>');
+  return h.join("");
+}
+
+// ===== CONTACTS PAGE =====
+function pgContacts() {
+  var C = [
+    {n:"Kat Jones",e:"kat_demo@wix.com",lbl:"Demo",s:"Never subscribed",m:false,c:"#1b8a4e",i:"KJ"},
+    {n:"Adam Walker",e:"mail.adamwalker@goo...",lbl:"",s:"Active",m:true,c:"#9a27d5",i:"AW"}
+  ];
+  var h = [];
+  h.push('<div class="page-hdr"><h1>Contacts</h1><div style="display:flex;gap:10px"><button class="btn-secondary">Import</button><button class="btn-primary">' + ICO.plus + ' Add Contact</button></div></div>');
+  h.push('<div class="tbl-toolbar"><div class="tt-view-select">All contacts <span class="tt-count">' + C.length + '</span> ' + ICO.chevDown + '</div><div class="tt-right"><div class="tt-filter-btn">' + ICO.filter + ' Filter</div><div class="tt-search">' + ICO.search + ' <input placeholder="Search contacts..." readonly></div></div></div>');
+  h.push('<div class="tbl-container"><table><thead><tr><th style="width:36px"><input type="checkbox"></th><th>Name</th><th>Email</th><th>Subscription Status</th><th>Role</th><th></th></tr></thead><tbody>');
+  C.forEach(function(c) {
+    h.push('<tr>'
+      + '<td><input type="checkbox"></td>'
+      + '<td><div style="display:flex;align-items:center;gap:10px"><div class="cav" style="background:' + c.c + '">' + c.i + '</div><div><div style="font-weight:500">' + c.n + '</div>' + (c.lbl ? '<span class="bdg gray" style="font-size:10px">' + c.lbl + '</span>' : "") + '</div></div></td>'
+      + '<td style="color:#9fa8b3">' + c.e + '</td>'
+      + '<td><span class="bdg ' + (c.s==="Active"?"ok":"gray") + '">' + c.s + '</span></td>'
+      + '<td>' + (c.m ? '<span class="bdg blue">SITE MEMBER</span>' : "&mdash;") + '</td>'
+      + '<td><div class="acell"><button>View</button><button>Email</button></div></td>'
+      + '</tr>');
+  });
+  h.push('</tbody></table></div>');
+  return h.join("");
+}
+
+// ===== ANALYTICS PAGE =====
+function pgAnalytics() {
+  var M = [{l:"Total Sessions",v:"0",c:"&mdash;"},{l:"Unique Visitors",v:"0",c:"&mdash;"},{l:"Page Views",v:"0",c:"&mdash;"},{l:"Bounce Rate",v:"&mdash;",c:"&mdash;"},{l:"Avg. Session",v:"0:00",c:"&mdash;"},{l:"Conversion Rate",v:"0%",c:"&mdash;"}];
+  var BD = [22,38,15,45,30,55], BL = ["Dec","Jan","Feb","Mar","Apr","May"], mx = 55;
+  var h = [];
+  h.push('<div class="page-hdr"><h1>Analytics</h1></div>');
+  h.push('<div class="ag">');
+  M.forEach(function(m) { h.push('<div class="ac"><div class="acl">' + m.l + '</div><div class="acv">' + m.v + '</div><div class="acc">' + m.c + '</div></div>'); });
+  h.push('</div>');
+  h.push('<div class="chart-box"><h3>Sessions Overview</h3><div class="bars">');
+  BD.forEach(function(v,i) {
+    h.push('<div class="bar-col"><div class="bar-fill" style="height:' + Math.round(v/mx*100) + '%"></div><div class="bar-lbl">' + BL[i] + '</div></div>');
+  });
+  h.push('</div></div>');
+  return h.join("");
+}
+
+// ===== INVENTORY PAGE =====
+function pgInventory() {
+  var P = [{n:"Ceramic Flower Vase",sk:"CV-001",st:14,low:5},{n:"Minimalist Tote Bag",sk:"TB-002",st:32,low:10},{n:"Hydrating Eye Serum",sk:"ES-003",st:8,low:10},{n:"Knitted Golf Sweater",sk:"KS-004",st:5,low:5},{n:"Round Eyeglasses",sk:"EG-005",st:22,low:5},{n:"Solid Wood Chair",sk:"WC-006",st:3,low:5},{n:"Foaming Facial Cleanser",sk:"FC-007",st:19,low:5},{n:"Baseball Cap",sk:"BC-008",st:45,low:10},{n:"Stainless Steel Water Bottle",sk:"WB-009",st:27,low:10},{n:"Essential Oil Diffuser",sk:"OD-010",st:11,low:5},{n:"Textured Loop Earrings",sk:"LE-011",st:16,low:5},{n:"Crew T-Shirt",sk:"CT-012",st:38,low:10}];
+  var h = [];
+  h.push('<div class="page-hdr"><h1>Inventory</h1></div>');
+  h.push('<div class="tbl-container"><table><thead><tr><th>Product</th><th>SKU</th><th>In Stock</th><th>Low Stock Threshold</th><th>Status</th><th></th></tr></thead><tbody>');
+  P.forEach(function(p) {
+    var warn=p.st<=p.low;
+    h.push('<tr><td style="font-weight:500">' + p.n + '</td><td style="color:#9fa8b3;font-size:12px">' + p.sk + '</td><td>' + p.st + '</td><td>' + p.low + '</td><td><span class="bdg ' + (warn?"warn":"ok") + '">' + (warn?"Low Stock":"OK") + '</span></td><td><div class="acell"><button>Adjust</button></div></td></tr>');
+  });
+  h.push('</tbody></table></div>');
+  return h.join("");
+}
+
+// ===== INBOX =====
+function pgInbox() {
+  var h = [];
+  h.push('<div class="page-hdr"><h1>Inbox</h1></div>');
+  h.push('<div class="widget"><div class="widget-body" style="padding:0">');
+  [{f:"Stuart Farley",s:"Question about my order",p:"Hi, I was wondering if...",t:"2h ago",u:true},{f:"Susie Bievins",s:"Return request",p:"I would like to return...",t:"Yesterday",u:true},{f:"Kat Jones",s:"Wholesale inquiry",p:"Hello, I run a small boutique...",t:"May 19",u:false}].forEach(function(m) {
+    var initials=m.f.split(" ").map(function(n){return n[0];}).join("");
+    h.push('<div class="act-item" style="padding:14px 20px;cursor:pointer"><div class="act-av" style="background:'+(m.u?"#116dff":"#9fa8b3")+'">'+initials+'</div><div class="act-info"><div class="act-name" style="font-weight:'+(m.u?700:500)+'">'+m.f+" — "+m.s+'</div><div class="act-desc">'+m.p+'</div></div><div class="act-time">'+m.t+'</div></div>');
+  });
+  h.push('</div></div>');
+  return h.join("");
+}
+
+// ===== MARKETING =====
+function pgMarketing() {
+  var h=[];
+  h.push('<div class="page-hdr"><h1>Marketing</h1></div>');
+  h.push('<div class="cards-row">');
+  [{n:"Email Campaigns",d:"Create and send email campaigns",e:"📧"},{n:"Social Posts",d:"Design posts for social media",e:"📱"},{n:"Google Ads",d:"Promote with targeted Google Ads",e:"🔍"},{n:"Facebook Ads",d:"Reach your audience on Facebook",e:"📊"},{n:"SEO Tools",d:"Optimize for search engines",e:"⚙️"}].forEach(function(t) {
+    h.push('<div class="card" style="cursor:pointer"><div style="font-size:28px;margin-bottom:10px">'+t.e+'</div><div class="card-label">'+t.n+'</div><p style="font-size:12px;color:#9fa8b3;margin-bottom:14px">'+t.d+'</p><button class="btn-primary" style="font-size:12px;padding:6px 14px">Get Started</button></div>');
+  });
+  h.push('</div>');
+  return h.join("");
+}
+
+// ===== AI =====
+function pgAI() {
+  var h=[];
+  h.push('<div class="page-hdr"><h1>AI Business Tools</h1></div>');
+  h.push('<div class="cards-row">');
+  [{n:"AI Text Creator",d:"Generate product descriptions & blog posts",e:"✍️"},{n:"AI Image Creator",d:"Create professional product images",e:"🎨"},{n:"AI Business Assistant",d:"Get instant answers to business questions",e:"🤖"},{n:"Logo Maker",d:"Design a professional logo",e:"⭐"}].forEach(function(t) {
+    h.push('<div class="card" style="text-align:center;cursor:pointer"><div style="font-size:36px;margin-bottom:10px">'+t.e+'</div><div style="font-size:14px;font-weight:600;margin-bottom:6px;color:#131720">'+t.n+'</div><p style="font-size:12px;color:#9fa8b3">'+t.d+'</p></div>');
+  });
+  h.push('</div>');
+  return h.join("");
+}
+
+// ===== BLOG =====
+function pgBlog() {
+  return '<div class="page-hdr"><h1>Blog</h1><button class="btn-primary">' + ICO.plus + ' Create Post</button></div><div class="empty-pg"><div class="eico">📝</div><h3>No posts yet</h3><p>Start writing to connect with your audience.</p></div>';
+}
+
+// ===== GENERIC =====
+function pgGeneric() {
+  return '<div class="page-hdr"><h1>Coming Soon</h1></div><div class="empty-pg"><div class="eico">🛠️</div><h3>This page is not yet built</h3><p>Add your content here using the reusable components from other pages as a starting point.</p></div>';
+}
+
+// ===== INIT =====
+document.addEventListener("DOMContentLoaded", function(){renderApp();});
+</script>
+
+</body></html>
