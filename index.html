@@ -210,6 +210,25 @@ table th input[type=checkbox],table td input[type=checkbox]{width:15px;height:15
 .siteinfo-bar a{color:#116dff;text-decoration:none;font-weight:500;}
 .siteinfo-bar .si-sep{color:#dde3ea;}
 @media(max-width:900px){.two-col{grid-template-columns:1fr;}}
+.page-hdr h1 .page-count{font-size:24px;font-weight:400;color:#9fa8b3;margin-left:6px;}
+.btn-link-text{background:none;border:none;color:#116dff;font-size:14px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:4px;padding:8px 4px;}
+.btn-link-text:hover{text-decoration:underline;}
+.btn-icon-square{width:36px;height:36px;border:1px solid #dde3ea;border-radius:20px;background:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#32536a;}
+.btn-icon-square:hover{background:#f7f8fa;}
+.btn-dots{width:32px;height:32px;border:1px solid #cdd9eb;border-radius:50%;background:#fff;cursor:pointer;color:#116dff;display:inline-flex;align-items:center;justify-content:center;padding:0;}
+.btn-dots:hover{background:#f5fafe;}
+.info-banner{background:#eaf2ff;border:1px solid #cfdef9;border-radius:8px;padding:12px 16px;font-size:14px;color:#162d3d;margin-bottom:16px;display:flex;align-items:center;gap:10px;}
+.tbl-products thead th,.tbl-inventory thead th{background:#f0f5fa;text-transform:none;font-size:13px;letter-spacing:0;color:#162d3d;font-weight:600;}
+.thumb-round{width:42px;height:42px;border-radius:50%;background:#f0f4f7;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;border:1px solid #eef1f4;}
+.variant-link{font-size:13px;color:#116dff;margin-top:3px;}
+.inv-select{display:flex;align-items:center;justify-content:space-between;gap:8px;width:180px;padding:7px 12px;border:1px solid #dde3ea;border-radius:6px;font-size:14px;cursor:pointer;color:#162d3d;background:#fff;}
+.inv-select:hover{border-color:#116dff;}
+.inv-input{width:180px;padding:7px 12px;border:1px solid #dde3ea;border-radius:6px;font-size:14px;color:#162d3d;background:#fff;outline:none;font-family:inherit;}
+.inv-input:focus{border-color:#116dff;}
+.filter-by-wrap{display:flex;align-items:center;gap:10px;}
+.filter-by-lbl{font-size:14px;color:#6b7889;}
+.filter-by-dd{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 12px;border:1px solid #dde3ea;border-radius:6px;font-size:14px;background:#fff;cursor:pointer;color:#131720;min-width:180px;}
+.filter-by-dd:hover{border-color:#116dff;}
 </style>
 </head>
 <body>
@@ -839,7 +858,8 @@ function pgBBAnalytics() {
     {l:"Pre-owned Revenue",v:"₪7,820",c:"+18% vs last month"}
   ];
   var MD = [320,540,480,890,1020,1030], ML = ["Dec","Jan","Feb","Mar","Apr","May"], mxM = Math.max.apply(null,MD);
-  var CD = [12,22,9,4], CL = ["Excellent","Good","Fair","Poor"], CC = ["#1b8a4e","#0f62e6","#a8690a","#c0392b"];
+  var CD = [12,22,9,4], CL = ["Excellent","Good","Fair","Poor"], CC = ["#1b8a4e","#0f62e6",
+  "#a8690a","#c0392b"];
   var cTotal = CD.reduce(function(a,b){return a+b;},0);
   var CAT = [{n:"Apparel",cnt:18,pct:38},{n:"Accessories",cnt:11,pct:23},{n:"Home",cnt:9,pct:19},{n:"Furniture",cnt:5,pct:11},{n:"Lifestyle",cnt:4,pct:9}];
   var h = [];
@@ -881,46 +901,47 @@ function pgBBAnalytics() {
 // ===== PRODUCTS PAGE =====
 function pgProducts() {
   var P = [
-    {n:"Ceramic Flower Vase",b:"Kiln & Co.",sk:"CV-001",p:"₪270",st:14,v:1,vis:"Visible",e:"🏺"},
-    {n:"Minimalist Tote Bag",b:"Linwell",sk:"TB-002",p:"₪20",st:32,v:2,vis:"Visible",e:"👜"},
-    {n:"Hydrating Eye Serum",b:"Bare Skin",sk:"ES-003",p:"₪56",st:8,v:1,vis:"Visible",e:"🧪"},
-    {n:"Knitted Golf Sweater",b:"Fairway",sk:"KS-004",p:"₪275",st:5,v:12,vis:"Visible",e:"👕"},
-    {n:"Round Eyeglasses",b:"Optic Loop",sk:"EG-005",p:"₪80",st:22,v:1,vis:"Visible",e:"👓"},
-    {n:"Solid Wood Chair",b:"Oakroom",sk:"WC-006",p:"₪690",st:3,v:1,vis:"Visible",e:"🪑"},
-    {n:"Foaming Facial Cleanser",b:"Bare Skin",sk:"FC-007",p:"₪85",st:19,v:4,vis:"Visible",e:"🧴"},
-    {n:"Baseball Cap",b:"Topline",sk:"BC-008",p:"₪68",st:45,v:1,vis:"Hidden",e:"🧢"},
-    {n:"Stainless Steel Water Bottle",b:"Hydroform",sk:"WB-009",p:"₪199",st:0,v:1,vis:"Visible",e:"🧐"},
-    {n:"Essential Oil Diffuser",b:"Aerafy",sk:"OD-010",p:"₪119",st:11,v:1,vis:"Visible",e:"🪧"},
-    {n:"Textured Loop Earrings",b:"Loop & Co.",sk:"LE-011",p:"₪269",st:16,v:1,vis:"Visible",e:"💍"},
-    {n:"Crew T-Shirt",b:"Basics",sk:"CT-012",p:"₪120",st:38,v:4,vis:"Visible",e:"👕"}
+    {n:"Ceramic Flower Vase",sk:"364215376135191",p:"₪270.00",inv:"In stock",v:1,e:"🏺"},
+    {n:"Minimalist Tote Bag",sk:"352144567823109",p:"₪20.00",inv:"In stock",v:2,e:"👜"},
+    {n:"Hydrating Eye Serum",sk:"364115376135191",p:"₪56.00",inv:"Out of stock",v:1,e:"🧪"},
+    {n:"Knitted Golf Sweater",sk:"326445132908745",p:"₪275.00",inv:"In stock",v:12,e:"👕"},
+    {n:"Round Eyeglasses",sk:"366615376135191",p:"₪80.00",inv:"In stock",v:1,e:"👓"},
+    {n:"Solid Wood Chair",sk:"36523641234523",p:"₪690.00",inv:"In stock",v:1,e:"🪑"},
+    {n:"Foaming Facial Cleanser",sk:"332456789012345",p:"₪85.00",inv:"In stock",v:4,e:"🧴"},
+    {n:"Baseball Cap",sk:"632835642834572",p:"₪68.00",inv:"In stock",v:1,e:"🧢"},
+    {n:"Stainless Steel Water Bottle",sk:"125634789045123",p:"₪199.00",inv:"Out of stock",v:1,e:"🧐"},
+    {n:"Essential Oil Diffuser",sk:"126351351935",p:"₪119.00",inv:"In stock",v:1,e:"🪧"},
+    {n:"Textured Loop Earrings",sk:"227345678901234",p:"₪269.00",inv:"In stock",v:1,e:"💍"},
+    {n:"Crew T-Shirt",sk:"21554345654",p:"₪120.00",inv:"In stock",v:4,e:"👕"}
   ];
-  function invBadge(st) {
-    if(st<=0) return '<span class="bdg bad">Out of stock</span>';
-    if(st<=5) return '<span class="bdg warn">Low · ' + st + '</span>';
-    return '<span class="bdg ok">In stock · ' + st + '</span>';
-  }
-  function visBadge(v) {
-    return v==="Visible"
-      ? '<span class="bdg ok">Visible</span>'
-      : '<span class="bdg gray">Hidden</span>';
-  }
+  var uploadIco = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>';
+  var slidersIco = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="14" y2="6"/><line x1="18" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="16" y2="18"/><line x1="20" y1="18" x2="20" y2="18"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>';
+  var gridIco = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>';
+  var dotsIco = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>';
   var h = [];
-  h.push(pageHdr("Products", "Add and organize the items you sell in your store.", '<button class="btn-secondary">Import</button><button class="btn-primary">' + ICO.plus + ' New Product</button>'));
-  h.push('<div class="tbl-toolbar"><div class="tt-view-select">All products <span class="tt-count">' + P.length + '</span> ' + ICO.chevDown + '</div><span style="color:#dde3ea;font-size:18px;margin:0 2px">|</span><div class="tt-manage-view">Manage View ' + ICO.chevDown + '</div><div class="tt-right"><div class="tt-filter-btn">' + ICO.filter + ' Filter</div><div class="tt-cols-btn">' + ICO.cols + '</div><div class="tt-search">' + ICO.search + ' <input placeholder="Search products..." readonly></div></div></div>');
-  h.push('<div class="tbl-container"><table><thead><tr>'
+  h.push('<div class="page-hdr"><div class="page-hdr-left">'
+    + '<h1>Products <span class="page-count">' + P.length + '</span></h1>'
+    + '<div class="page-sub">To see how your products perform, go to <a href="#" class="learn-more">Store Overview</a>.</div>'
+    + '</div><div class="page-hdr-actions">'
+    + '<button class="btn-icon-square" title="Grid view">' + gridIco + '</button>'
+    + '<button class="btn-secondary">More Actions ' + ICO.chevDown + '</button>'
+    + '<button class="btn-primary">' + ICO.plus + ' New Product</button>'
+    + '</div></div>');
+  h.push('<div class="tbl-toolbar"><div class="tt-view-select">All products <span class="tt-count">' + P.length + '</span> ' + ICO.chevDown + '</div><span style="color:#dde3ea;font-size:18px;margin:0 2px">|</span><div class="tt-manage-view">Manage View ' + ICO.chevDown + '</div><div class="tt-right"><div class="tt-filter-btn">' + ICO.filter + ' Filter</div><div class="tt-cols-btn" title="Export">' + uploadIco + '</div><div class="tt-cols-btn" title="Columns">' + slidersIco + '</div><div class="tt-search">' + ICO.search + ' <input placeholder="Search..." readonly></div></div></div>');
+  h.push('<div class="tbl-container"><table class="tbl-products"><thead><tr>'
     + '<th style="width:36px"><input type="checkbox"></th>'
-    + '<th>Product</th><th>Brand</th><th>Price</th><th>Inventory</th><th>Variants</th><th>Visibility</th><th></th>'
+    + '<th>Name</th><th>Type</th><th>SKU</th><th>Price</th><th>Inventory</th><th style="width:60px"></th>'
     + '</tr></thead><tbody>');
   P.forEach(function(p) {
+    var variantHtml = p.v>1 ? '<div class="variant-link">' + p.v + ' variants</div>' : '';
     h.push('<tr>'
       + '<td><input type="checkbox"></td>'
-      + '<td><div class="prod-cell"><div class="prod-thumb">' + p.e + '</div><div><div class="prod-name">' + p.n + '</div><div class="prod-sub">SKU: ' + p.sk + '</div></div></div></td>'
-      + '<td>' + p.b + '</td>'
-      + '<td style="font-weight:600">' + p.p + '</td>'
-      + '<td>' + invBadge(p.st) + '</td>'
-      + '<td style="color:#6b7889">' + (p.v>1?p.v+" variants":"&mdash;") + '</td>'
-      + '<td>' + visBadge(p.vis) + '</td>'
-      + '<td><div class="acell"><button>Edit</button></div></td>'
+      + '<td><div class="prod-cell"><div class="prod-thumb">' + p.e + '</div><div><div class="prod-name">' + p.n + '</div>' + variantHtml + '</div></div></td>'
+      + '<td>Physical</td>'
+      + '<td>' + p.sk + '</td>'
+      + '<td>' + p.p + '</td>'
+      + '<td>' + p.inv + '</td>'
+      + '<td><button class="btn-dots" title="More">' + dotsIco + '</button></td>'
       + '</tr>');
   });
   h.push('</tbody></table></div>');
@@ -970,13 +991,57 @@ function pgAnalytics() {
 
 // ===== INVENTORY PAGE =====
 function pgInventory() {
-  var P = [{n:"Ceramic Flower Vase",sk:"CV-001",st:14,low:5},{n:"Minimalist Tote Bag",sk:"TB-002",st:32,low:10},{n:"Hydrating Eye Serum",sk:"ES-003",st:8,low:10},{n:"Knitted Golf Sweater",sk:"KS-004",st:5,low:5},{n:"Round Eyeglasses",sk:"EG-005",st:22,low:5},{n:"Solid Wood Chair",sk:"WC-006",st:3,low:5},{n:"Foaming Facial Cleanser",sk:"FC-007",st:19,low:5},{n:"Baseball Cap",sk:"BC-008",st:45,low:10},{n:"Stainless Steel Water Bottle",sk:"WB-009",st:27,low:10},{n:"Essential Oil Diffuser",sk:"OD-010",st:11,low:5},{n:"Textured Loop Earrings",sk:"LE-011",st:16,low:5},{n:"Crew T-Shirt",sk:"CT-012",st:38,low:10}];
+  var P = [
+    {n:"Baseball Cap",sk:"632835642834572",inv:"stock",e:"🧢"},
+    {n:"Ceramic Flower Vase",sk:"364215376135191",inv:"stock",e:"🏺"},
+    {n:"Crew T-Shirt",vr:"Large",sk:"21554345656",inv:"20",e:"👕"},
+    {n:"Crew T-Shirt",vr:"Medium",sk:"21554345655",inv:"0",e:"👕"},
+    {n:"Crew T-Shirt",vr:"Small",sk:"21554345654",inv:"15",e:"👕"},
+    {n:"Crew T-Shirt",vr:"X-Large",sk:"21554345657",inv:"6",e:"👕"},
+    {n:"Essential Oil Diffuser",sk:"126351351935",inv:"stock",e:"🪧"},
+    {n:"Foaming Facial Cleanser",vr:"100ml",sk:"632835642834503",inv:"stock",e:"🧴"},
+    {n:"Hydrating Eye Serum",sk:"364115376135191",inv:"out",e:"🧪"},
+    {n:"Knitted Golf Sweater",vr:"Medium · Sage",sk:"326445132908745",inv:"5",e:"👕"},
+    {n:"Minimalist Tote Bag",vr:"Lavender",sk:"352144567823109",inv:"stock",e:"👜"},
+    {n:"Round Eyeglasses",sk:"366615376135191",inv:"stock",e:"👓"}
+  ];
+  var dotsIco = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>';
+  var infoIco = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#116dff" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
   var h = [];
-  h.push(pageHdr("Inventory", "Monitor stock levels and get alerted when items run low."));
-  h.push('<div class="tbl-container"><table><thead><tr><th>Product</th><th>SKU</th><th>In Stock</th><th>Low Stock Threshold</th><th>Status</th><th></th></tr></thead><tbody>');
+  h.push('<div class="page-hdr"><div class="page-hdr-left">'
+    + '<h1>Inventory <span class="page-count">' + P.length + '</span></h1>'
+    + '<div class="page-sub">Your inventory updates whenever an order is placed. <a href="#" class="learn-more">Change this setting</a></div>'
+    + '</div><div class="page-hdr-actions">'
+    + '<button class="btn-link-text">View Detailed Report ' + ICO.chev + '</button>'
+    + '</div></div>');
+  h.push('<div class="info-banner">' + infoIco + ' Some fields are restricted for products managed by Modalyst.</div>');
+  h.push('<div class="tbl-toolbar">'
+    + '<div class="filter-by-wrap"><span class="filter-by-lbl">Filter by:</span><div class="filter-by-dd">All ' + ICO.chevDown + '</div></div>'
+    + '<div class="tt-right">'
+    + '<div class="tt-filter-btn">' + ICO.filter + ' Filter</div>'
+    + '<div class="tt-search">' + ICO.search + ' <input placeholder="Search..." readonly></div>'
+    + '</div></div>');
+  h.push('<div class="tbl-container"><table class="tbl-inventory"><thead><tr>'
+    + '<th style="width:36px"><input type="checkbox"></th>'
+    + '<th>Name</th><th>SKU</th><th>Inventory</th><th style="width:60px"></th>'
+    + '</tr></thead><tbody>');
   P.forEach(function(p) {
-    var warn=p.st<=p.low;
-    h.push('<tr><td style="font-weight:500">' + p.n + '</td><td style="color:#9fa8b3;font-size:12px">' + p.sk + '</td><td>' + p.st + '</td><td>' + p.low + '</td><td><span class="bdg ' + (warn?"warn":"ok") + '">' + (warn?"Low Stock":"OK") + '</span></td><td><div class="acell"><button>Adjust</button></div></td></tr>');
+    var sub = p.vr ? '<div class="prod-sub">' + p.vr + '</div>' : '';
+    var invCell;
+    if(p.inv === "stock") {
+      invCell = '<div class="inv-select">In stock ' + ICO.chevDown + '</div>';
+    } else if(p.inv === "out") {
+      invCell = '<div class="inv-select">Out of stock ' + ICO.chevDown + '</div>';
+    } else {
+      invCell = '<input type="text" class="inv-input" value="' + p.inv + '" readonly>';
+    }
+    h.push('<tr>'
+      + '<td><input type="checkbox"></td>'
+      + '<td><div class="prod-cell"><div class="thumb-round">' + p.e + '</div><div><div class="prod-name">' + p.n + '</div>' + sub + '</div></div></td>'
+      + '<td>' + p.sk + '</td>'
+      + '<td>' + invCell + '</td>'
+      + '<td><button class="btn-dots" title="More">' + dotsIco + '</button></td>'
+      + '</tr>');
   });
   h.push('</tbody></table></div>');
   return h.join("");
