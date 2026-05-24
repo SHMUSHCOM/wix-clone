@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wix Stores Re-Commerce — PRD</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <a class="wix-logo" href="https://www.wix.com" target="_blank" rel="noopener" aria-label="Wix">
+        <span class="wix-logo-mark">Wix</span>
+        <span class="wix-logo-dot" aria-hidden="true"></span>
+      </a>
+    </div>
+
+    <nav class="nav" aria-label="Sections">
+      <div class="nav-group">
+        <div class="nav-group-title">Summary</div>
+        <button class="nav-item active" data-section="overview">
+          <span class="nav-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          </span>
+          <span>PRD Overview</span>
+        </button>
+      </div>
+
+      <div class="nav-divider" role="separator"></div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Requirements</div>
+        <button class="nav-item" data-section="project">
+          <span class="nav-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/></svg>
+          </span>
+          <span>Project Details</span>
+        </button>
+        <button class="nav-item" data-section="business">
+          <span class="nav-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l7-5 7 5v13"/><path d="M9 21V12h6v9"/></svg>
+          </span>
+          <span>Business Requirements</span>
+        </button>
+        <button class="nav-item" data-section="functional">
+          <span class="nav-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          </span>
+          <span>Functional Requirements</span>
+        </button>
+        <button class="nav-item" data-section="operational">
+          <span class="nav-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </span>
+          <span>Operational Requirements</span>
+        </button>
+      </div>
+
+      <div class="nav-divider" role="separator"></div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Reference</div>
+        <button class="nav-item" data-section="open">
+          <span class="nav-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </span>
+          <span>Open Questions</span>
+        </button>
+        <button class="nav-item" data-section="appendix">
+          <span class="nav-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </span>
+          <span>Appendix</span>
+        </button>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="footer-row"><span class="dot draft"></span><span>Status: Draft</span></div>
+      <div class="footer-row muted">Last updated 2026-05-24</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1>Wix Stores Re-Commerce</h1>
+        <span class="topbar-divider" aria-hidden="true"></span>
+        <span class="topbar-kicker">Product Requirements</span>
+      </div>
+      <div class="topbar-right">
+        <span class="chip"><span class="dot draft"></span>Draft</span>
+        <span class="chip muted">v0.2</span>
+        <span class="chip muted">Owner · AdamWalker-112358</span>
+      </div>
+    </header>
+
+    <div class="content" id="content">
+
+      <!-- OVERVIEW -->
+      <section class="section active" id="section-overview">
+        <div class="section-hero">
+          <h2>Native Buy-Backs for Wix Stores</h2>
+          <p class="lede">A native buy-back and second-hand marketplace module that turns Wix Stores into an end-to-end recommerce platform — closing a structural gap against Shopify and unlocking a new merchant acquisition channel.</p>
+        </div>
+
+        <div class="kpi-row">
+          <div class="kpi"><div class="kpi-label">New Buyback Analytics</div><div class="kpi-value">9 new KPIs</div><div class="kpi-meta">Recommerce analytics for insight into buyback revenue</div></div>
+          <div class="kpi"><div class="kpi-label">Buyback Lifecycle management</div><div class="kpi-value">3 new entities</div><div class="kpi-meta">Manage Requests · Receivables · Relisting</div></div>
+          <div class="kpi"><div class="kpi-label">MVP outcome</div><div class="kpi-value">End-to-end store integration</div><div class="kpi-meta">Submission → coupon issued and inventory updates, fully inside Wix</div></div>
+        
+        </div>
+
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3>Why now</h3>
+            <p>The global second-hand market is mainstream across electronics, fashion, sporting goods, and home goods. Wix has no native recommerce capability — Shopify doesn't either. A native module closes that gap.</p>
+          </div>
+          <div class="info-card">
+            <h3>Three compounding wins</h3>
+            <ul>
+              <li>New merchant acquisition in a growing segment</li>
+              <li>Every credit redemption = a Wix Payments transaction</li>
+              <li>Platform stickiness via daily intake & relisting</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h3>Key design calls</h3>
+            <ul>
+              <li>Buy-backs scoped to categories, not to original buyer</li>
+              <li>Payouts always denominated in store credit</li>
+              <li>Digital products excluded by design</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="phases">
+          <h3 class="block-title">Release Phases</h3>
+          <div class="phase-strip">
+            <div class="phase"><div class="phase-num">1</div><div class="phase-name">Prototype</div><div class="phase-desc">Static HTML demo, full module coverage</div></div>
+            <div class="phase-arrow">›</div>
+            <div class="phase"><div class="phase-num">2</div><div class="phase-name">Production MVP</div><div class="phase-desc">Requests + Receivables + Coupons</div></div>
+            <div class="phase-arrow">›</div>
+            <div class="phase"><div class="phase-num">3</div><div class="phase-name">Customer-Facing</div><div class="phase-desc">Sell-to-us form, pre-owned catalog, carriers</div></div>
+            <div class="phase-arrow">›</div>
+            <div class="phase"><div class="phase-num">4</div><div class="phase-name">Intelligence</div><div class="phase-desc">Auto-pricing, cohorts, templates</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECT DETAILS -->
+      <section class="section" id="section-project">
+        <div class="section-head">
+          <div class="section-eyebrow">Section 1</div>
+          <h2>Project Details</h2>
+        </div>
+
+        <div class="tabs" data-tabgroup="project">
+          <button class="tab active" data-tab="history">Document History</button>
+          <button class="tab" data-tab="stakeholders">Stakeholders</button>
+          <button class="tab" data-tab="timeline">Timeline</button>
+          <button class="tab" data-tab="resources">Resources</button>
+        </div>
+
+        <div class="tab-panels">
+          <div class="tab-panel active" data-panel="history">
+            <table class="data-table">
+              <thead><tr><th>Version</th><th>Date</th><th>Description</th></tr></thead>
+              <tbody>
+                <tr><td><span class="badge">0.1</span></td><td>2026-05-23</td><td>Initial prototype PRD — dashboard shell, Buy Backs module, detail views</td></tr>
+                <tr><td><span class="badge primary">0.2</span></td><td>2026-05-24</td><td>Rewrite incorporating re-commerce business context and full PRD structure</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tab-panel" data-panel="stakeholders">
+            <div class="callout warning">
+              <strong>Assumption:</strong> Cross-functional stakeholders have not yet been named. The following roles should be assigned before this PRD is reviewed for production investment.
+            </div>
+            <table class="data-table">
+              <thead><tr><th>Role</th><th>Name</th></tr></thead>
+              <tbody>
+                <tr><td>Product</td><td>Adam Walker</td></tr>
+                <tr><td>Engineering</td><td><span class="muted">TBD</span></td></tr>
+                <tr><td>Design</td><td><span class="muted">TBD</span></td></tr>
+                <tr><td>QA</td><td><span class="muted">TBD</span></td></tr>
+                <tr><td>Payments / Platform</td><td><span class="muted">TBD</span></td></tr>
+                <tr><td>Sales / Customer Success</td><td><span class="muted">TBD</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tab-panel" data-panel="timeline">
+            <p>Two parallel workstreams:</p>
+            <div class="cards-grid two-col">
+              <div class="info-card">
+                <h3>Prototype (current round)</h3>
+                <p>Static HTML demo covering the full Buy Backs module and dashboard depth improvements.</p>
+                <p class="muted"><em>Assumption: 3–4 weeks from kick-off.</em></p>
+              </div>
+              <div class="info-card">
+                <h3>Production</h3>
+                <p>Following prototype validation and discovery — phased delivery (see Business Requirements › Phases).</p>
+              </div>
+            </div>
+
+            <h3 class="block-title">Milestones</h3>
+            <table class="data-table">
+              <thead><tr><th>Milestone</th><th>Scope</th><th>Target</th></tr></thead>
+              <tbody>
+                <tr><td><strong>M1</strong> — Detail views</td><td>Order, Product, Contact detail pages</td><td><span class="muted">TBD</span></td></tr>
+                <tr><td><strong>M2</strong> — Placeholder fill</td><td>5 placeholder pages with mocked content</td><td><span class="muted">TBD</span></td></tr>
+                <tr><td><strong>M3</strong> — Interactivity</td><td>Setup checklist, Inbox, search/filter, notifications</td><td><span class="muted">TBD</span></td></tr>
+                <tr><td><strong>M4</strong> — Polish</td><td>Mobile responsiveness, a11y, empty states</td><td><span class="muted">TBD</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="tab-panel" data-panel="resources">
+            <div class="callout warning">
+              <strong>Assumption:</strong> No Figma files, Linear tickets, or external links have been created for this initiative. Add as they become available.
+            </div>
+            <ul class="bullet-list">
+              <li><strong>Figma designs:</strong> <span class="muted">TBD</span></li>
+              <li><strong>Linear project:</strong> <span class="muted">TBD</span></li>
+              <li><strong>Carrier API options:</strong> <span class="muted">TBD</span></li>
+              <li><strong>Market sizing analysis:</strong> <span class="muted">TBD</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- BUSINESS REQUIREMENTS -->
+      <section class="section" id="section-business">
+        <div class="section-head">
+          <div class="section-eyebrow">Section 2</div>
+          <h2>Business Requirements</h2>
+        </div>
+
+        <div class="tabs" data-tabgroup="business">
+          <button class="tab active" data-tab="context">Context</button>
+          <button class="tab" data-tab="existing">Existing State</button>
+          <button class="tab" data-tab="problems">Problems</button>
+          <button class="tab" data-tab="customer">Customer Asks</button>
+          <button class="tab" data-tab="usecases">Use Cases</button>
+          <button class="tab" data-tab="personas">Personas</button>
+          <button class="tab" data-tab="solution">Solution</button>
+          <button class="tab" data-tab="strategy">Strategy</button>
+          <button class="tab" data-tab="competitive">Competitive</button>
+          <button class="tab" data-tab="phases">Phases</button>
+          <button class="tab" data-tab="mvp">MVP</button>
+        </div>
+
+        <div class="tab-panels">
+          <div class="tab-panel active" data-panel="context">
+            <h3>Business Context and Motivation</h3>
+            <p>The global second-hand and re-commerce market is growing rapidly across verticals — electronics, fashion, sporting goods, and home goods — driven by consumer price sensitivity, sustainability awareness, and the mainstreaming of pre-owned goods. Platforms like Back Market, Swappa, and ThredUp have demonstrated significant demand for vertically-focused recommerce, while horizontal marketplaces (eBay, Facebook Marketplace) serve the long tail.</p>
+            <p>Wix Stores currently has no native capability for recommerce. Merchants who want to operate a buy-back or trade-in program must manage intake manually — email, spreadsheets, custom forms — and use entirely separate tools for logistics, credit issuance, and pre-owned inventory listing. This creates a structural acquisition gap: recommerce-focused businesses are not natural Wix users today because Wix does not solve their core operational problem.</p>
+            <p>A native buy-back capability closes this gap and creates three compounding advantages for Wix:</p>
+            <ol class="numbered-list">
+              <li>It opens a new merchant acquisition channel in a growing market segment.</li>
+              <li>Every credit redemption is a purchase processed through Wix Payments, increasing payment processing volume without new merchant acquisition cost.</li>
+              <li>The recommerce cycle — intake, fulfillment, relisting, sale — deepens merchant engagement with Wix Stores far beyond a typical transactional relationship.</li>
+            </ol>
+          </div>
+
+          <div class="tab-panel" data-panel="existing">
+            <h3>Existing State</h3>
+            <p>Wix Stores today supports product catalog management, order management, fulfillment, customer contact records, store credit and coupon issuance, and payment processing.</p>
+            <div class="callout warning">
+              <strong>Assumption:</strong> No native buy-back, trade-in, or recommerce workflow exists in the current product. Merchants attempting a buy-back program today do so manually — email, manual coupons with no link to the originating request, independent shipping, and listing accepted items as standard new products with no pre-owned designation.
+            </div>
+            <p>There is no "Sell to us" customer-facing form natively. There is no intake workflow, condition-review process, or pre-owned inventory label in the current product.</p>
+          </div>
+
+          <div class="tab-panel" data-panel="problems">
+            <h3>Problems We Are Solving</h3>
+            <div class="problem-grid">
+              <div class="problem-card">
+                <div class="problem-num">1</div>
+                <h4>No structured buy-back workflow</h4>
+                <p>Merchants who want to operate a buy-back program manage intake manually with no visibility into request status, proposed prices, or fulfillment state across multiple requests.</p>
+              </div>
+              <div class="problem-card">
+                <div class="problem-num">2</div>
+                <h4>No pre-owned distinction in catalog</h4>
+                <p>There is no native concept of "pre-owned" in the product catalog. Merchants cannot label, price, or present used items distinctly from new ones within the same store.</p>
+              </div>
+              <div class="problem-card">
+                <div class="problem-num">3</div>
+                <h4>Credits disconnected from buy-backs</h4>
+                <p>Issuing store credit today requires manual coupon creation with no link to the originating buy-back, making reconciliation impossible at scale and creating no feedback loop on credit redemption.</p>
+              </div>
+              <div class="problem-card">
+                <div class="problem-num">4</div>
+                <h4>Recommerce cycle is fragmented</h4>
+                <p>Intake, logistics, condition review, credit issuance, and relisting each require a separate tool or manual step. There is no single workflow from submission to relisted pre-owned product.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="customer">
+            <h3>Customer Asks</h3>
+            <div class="callout danger">
+              <strong>Highest-priority gap:</strong> No specific customer signals — Linear IDs, merchant quotes, or support patterns — have been cited in the source material. Actual data must be collected before this moves past prototyping.
+            </div>
+            <p>Expected signal types to gather:</p>
+            <ul class="bullet-list">
+              <li>Merchant requests for trade-in or buy-back functionality in the Wix community forum and support channels</li>
+              <li>Inbound sales inquiries from recommerce-focused businesses evaluating Wix as a platform</li>
+              <li>Support tickets from merchants attempting manual workarounds for buy-back programs</li>
+              <li>Win/loss data on deals where recommerce capability was cited as a differentiator</li>
+            </ul>
+          </div>
+
+          <div class="tab-panel" data-panel="usecases">
+            <h3>Use Cases</h3>
+            <div class="usecase">
+              <div class="uc-head"><span class="uc-id">UC-1</span><h4>Merchant receives and processes a buy-back request</h4></div>
+              <div class="uc-row"><span class="uc-label">Trigger</span><span>Customer submits a buy-back request (storefront form or any channel).</span></div>
+              <div class="uc-row"><span class="uc-label">Action</span><span>Merchant opens Requests, reviews product details / stated condition / photos, enters a proposed price in store credit, sends to customer.</span></div>
+              <div class="uc-row"><span class="uc-label">Outcome</span><span>Customer approves or declines. On approval, carrier pickup is scheduled; request moves to Receivables as In Transit.</span></div>
+            </div>
+            <div class="usecase">
+              <div class="uc-head"><span class="uc-id">UC-2</span><h4>Merchant reviews a received item and issues credit</h4></div>
+              <div class="uc-row"><span class="uc-label">Trigger</span><span>Buy-back shipment arrives at the merchant.</span></div>
+              <div class="uc-row"><span class="uc-label">Action</span><span>Merchant compares physical condition to stated. If matched, approves and issues a store-credit coupon equal to the proposed price.</span></div>
+              <div class="uc-row"><span class="uc-label">Outcome</span><span>Customer receives a redeemable coupon. Merchant has a verified item ready to relist.</span></div>
+            </div>
+            <div class="usecase">
+              <div class="uc-head"><span class="uc-id">UC-3</span><h4>Merchant relists an approved item as pre-owned</h4></div>
+              <div class="uc-row"><span class="uc-label">Trigger</span><span>Approved buy-back item staged for resale.</span></div>
+              <div class="uc-row"><span class="uc-label">Action</span><span>Merchant sets pre-owned price (typically below new), attaches item-specific photos, publishes with a "Pre-owned" designation.</span></div>
+              <div class="uc-row"><span class="uc-label">Outcome</span><span>Item appears in storefront alongside new inventory, priced and labeled for the second-hand market.</span></div>
+            </div>
+            <div class="usecase">
+              <div class="uc-head"><span class="uc-id">UC-4</span><h4>Price-sensitive customer purchases a pre-owned item</h4></div>
+              <div class="uc-row"><span class="uc-label">Trigger</span><span>Customer browsing encounters a discounted pre-owned item.</span></div>
+              <div class="uc-row"><span class="uc-label">Action</span><span>Customer purchases via standard checkout.</span></div>
+              <div class="uc-row"><span class="uc-label">Outcome</span><span>Merchant earns margin; customer accesses product at lower price — potentially converting a non-full-price customer.</span></div>
+            </div>
+            <div class="usecase">
+              <div class="uc-head"><span class="uc-id">UC-5</span><h4>Customer redeems store credit earned through a buy-back</h4></div>
+              <div class="uc-row"><span class="uc-label">Trigger</span><span>Customer with an unused buy-back coupon returns.</span></div>
+              <div class="uc-row"><span class="uc-label">Action</span><span>Customer applies the coupon at checkout.</span></div>
+              <div class="uc-row"><span class="uc-label">Outcome</span><span>Merchant retains the customer; credit may fund a cart larger than its face value, raising AOV.</span></div>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="personas">
+            <h3>Personas</h3>
+            <div class="cards-grid">
+              <div class="persona-card primary">
+                <div class="persona-tag">Primary · Acquisition target</div>
+                <h4>The Recommerce Merchant</h4>
+                <p>A merchant operating a dedicated buy-back or second-hand program. Examples: specialty electronics reseller, fashion consignment, sporting-goods trade-in. Has existing buy-back ops they want to centralize. <strong>Not currently a Wix user</strong> because Wix lacks the workflow tooling they need.</p>
+              </div>
+              <div class="persona-card">
+                <div class="persona-tag">Secondary</div>
+                <h4>The Established Wix Retailer</h4>
+                <p>An existing Wix merchant with a physical-product store who wants to expand into recommerce as an additional revenue stream. Riya (20+ products, ~50 orders/month) is the archetype.</p>
+              </div>
+              <div class="persona-card">
+                <div class="persona-tag">Secondary</div>
+                <h4>The New Shop Owner</h4>
+                <p>A newer Wix merchant using buy-backs primarily as a customer-retention and differentiation mechanism. Maya (handmade ceramics, non-technical) is the archetype. More interested in the credit retention mechanic than high volume.</p>
+              </div>
+              <div class="persona-card excluded">
+                <div class="persona-tag danger">Excluded</div>
+                <h4>Digital product merchants</h4>
+                <p>Digital products have no physical condition, cannot be meaningfully bought back, and would create abuse vectors. Buy-back eligibility is explicitly limited to physical products.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="solution">
+            <h3>High-Level Solution</h3>
+            <p>A native buy-back / recommerce module within Wix Stores, added as a top-level sidebar pillar with four sub-sections:</p>
+            <div class="cards-grid two-col">
+              <div class="info-card accent"><h4>① Requests</h4><p>Intake and pricing workflow — from customer submission through merchant proposal and customer approval.</p></div>
+              <div class="info-card accent"><h4>② Receivables</h4><p>Fulfillment workflow — from carrier transit through condition review and store-credit coupon issuance.</p></div>
+              <div class="info-card accent"><h4>③ Relisting</h4><p>Pre-owned inventory management — staging, pricing, and publishing approved items alongside new inventory.</p></div>
+              <div class="info-card accent"><h4>④ Analytics</h4><p>Program health visibility — credits issued vs. redeemed, buy-back volume, pre-owned revenue, net profit.</p></div>
+            </div>
+
+            <h4 class="block-title">Key design decisions</h4>
+            <ul class="bullet-list">
+              <li><strong>Category-scoped, not buyer-scoped.</strong> A merchant selling Apple products accepts any iPhone regardless of purchase origin. Broadens supply; positions the merchant as a category-level recommerce hub rather than a returns desk.</li>
+              <li><strong>Payouts are store credit, not cash.</strong> Funds the program from inventory and biases customers toward repeat purchases rather than cash extraction.</li>
+              <li><strong>Digital products excluded by design.</strong> Risk of abuse (submitting the same digital purchase repeatedly) outweighs any benefit.</li>
+            </ul>
+          </div>
+
+          <div class="tab-panel" data-panel="strategy">
+            <h3>Strategy Around the Solution</h3>
+            <div class="callout warning">
+              <strong>Assumption:</strong> Aligns with a Wix platform strategy of becoming the end-to-end commerce operating system for SMBs.
+            </div>
+            <div class="strategy-grid">
+              <div class="strategy-card"><div class="strategy-num">1</div><h4>New merchant acquisition</h4><p>Recommerce-focused businesses are not Wix users today because Wix lacks intake/workflow tooling. A native module creates a credible reason to switch.</p></div>
+              <div class="strategy-card"><div class="strategy-num">2</div><h4>Payment processing volume</h4><p>Every buy-back credit redemption is a Wix Payments transaction. Recommerce drives repeat transactions at no incremental acquisition cost.</p></div>
+              <div class="strategy-card"><div class="strategy-num">3</div><h4>Platform stickiness</h4><p>Merchants running active buy-back programs engage with Wix more frequently (daily intake, condition review, relisting) than outbound-only merchants.</p></div>
+              <div class="strategy-card"><div class="strategy-num">4</div><h4>Customer LTV extension</h4><p>Store credit creates a pull mechanic that returns customers for a subsequent purchase, frequently funding a cart larger than the credit face value.</p></div>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="competitive">
+            <h3>Competitive Analysis</h3>
+            <div class="callout warning">
+              <strong>Assumption:</strong> No formal competitive analysis has been performed. The following represents the landscape to examine before committing to production architecture.
+            </div>
+            <table class="data-table">
+              <thead><tr><th>Competitor</th><th>Type</th><th>Gap vs. Wix native module</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Shopify</strong></td><td>Platform</td><td>No native buy-back. Third-party apps (Trove, Recurate, Retriev) add complexity, separate subscriptions, no native inventory/payments integration. This is the gap Wix can close.</td></tr>
+                <tr><td><strong>Back Market, Swappa, Decluttr</strong></td><td>Dedicated recommerce</td><td>Not general-purpose. Merchant can't run a new-goods store in the same interface. Wix's edge: single merchant-branded storefront for both new and pre-owned.</td></tr>
+                <tr><td><strong>Facebook Marketplace, eBay</strong></td><td>Horizontal marketplace</td><td>No merchant-branded experience, no workflow tooling, no credit issuance. Attract bargain hunters, not brand-loyal customers.</td></tr>
+              </tbody>
+            </table>
+            <div class="callout danger">
+              <strong>What not to copy:</strong> marketplace dynamics (public buyer/seller ratings, platform fees per transaction, seller reputation scores). Wix's recommerce module serves the merchant's branded store — marketplace dynamics would conflict with the merchant-brand relationship Wix is built on.
+            </div>
+            <p><strong>Wix's differentiator:</strong> a merchant-branded, fully integrated recommerce program that lives alongside the primary store, with credit issuance that creates a retention loop third-party apps and marketplaces cannot replicate.</p>
+          </div>
+
+          <div class="tab-panel" data-panel="phases">
+            <h3>Phases and Release Details</h3>
+            <div class="phase-vertical">
+              <div class="phase-row">
+                <div class="phase-badge">Phase 1</div>
+                <div class="phase-body">
+                  <h4>Prototype</h4>
+                  <p>A static single-file HTML demo covering the full Buy Backs module (Requests, Receivables, Relisting, Analytics) and depth improvements to existing pages. No backend. No build step.</p>
+                  <p><strong>Constraint:</strong> single <code>index.html</code>, under ~3,000 lines / ~150 KB.</p>
+                  <p><strong>Goal:</strong> a 3-minute click-through tour that never hits a "Coming Soon" placeholder. ≥ 25 of ~40 sidebar entries land on a non-placeholder page (up from 11 today).</p>
+                </div>
+              </div>
+              <div class="phase-row">
+                <div class="phase-badge">Phase 2</div>
+                <div class="phase-body">
+                  <h4>Production MVP</h4>
+                  <p>Merchant-facing Buy Backs module in production Wix Stores. <strong>Scope:</strong> Requests, Receivables, and coupon issuance.</p>
+                  <p><strong>Pre-condition:</strong> prototype validated, customer research completed, Wix Payments coupon mechanics confirmed with the Payments team.</p>
+                </div>
+              </div>
+              <div class="phase-row">
+                <div class="phase-badge">Phase 3</div>
+                <div class="phase-body">
+                  <h4>Customer-Facing Intake and Catalog Integration</h4>
+                  <p>Customer-facing "Sell to us" submission form on the storefront. Pre-owned product designation in the catalog. Carrier integration for label generation and real-time tracking.</p>
+                </div>
+              </div>
+              <div class="phase-row">
+                <div class="phase-badge">Phase 4</div>
+                <div class="phase-body">
+                  <h4>Intelligence Layer</h4>
+                  <p>Automatic pricing suggestions based on condition and category. Funnel analytics and cohort analysis. Buy-back program configuration templates for common merchant types.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="mvp">
+            <h3>MVP Definition</h3>
+            <div class="mvp-banner">
+              <div class="mvp-banner-icon">✓</div>
+              <div>
+                <div class="mvp-banner-title">The MVP outcome</div>
+                <div class="mvp-banner-body">Process a buy-back request — from customer submission to store-credit coupon issued — entirely within the Wix dashboard, without a spreadsheet, external email, or manual coupon creation.</div>
+              </div>
+            </div>
+
+            <h4 class="block-title">Minimum capabilities</h4>
+            <ol class="numbered-list">
+              <li>A Requests page where buy-back submissions can be entered and managed, with proposal and approval flow.</li>
+              <li>A Receivables page where received items are condition-reviewed and credit issued on approval.</li>
+              <li>A coupon generated and linked to the originating buy-back request, redeemable storewide.</li>
+            </ol>
+
+            <h4 class="block-title">Explicitly deferred from MVP</h4>
+            <table class="data-table">
+              <thead><tr><th>Deferred</th><th>Reason</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Customer-facing submission form</strong></td><td>Customer-facing form requires storefront integration outside the dashboard module scope.</td></tr>
+                <tr><td><strong>Carrier integration</strong></td><td>Label generation and real-time tracking require third-party API work; manual tracking suffices for MVP.</td></tr>
+                <tr><td><strong>Relisting workflow</strong></td><td>Core value (credit issued, customer retained) does not require native relisting tooling.</td></tr>
+                <tr><td><strong>Analytics dashboard</strong></td><td>Operational before reporting. Merchant can run program without it.</td></tr>
+                <tr><td><strong>Automatic pricing engine</strong></td><td>Pricing judgment varies by category/merchant; automation needs sufficient data to be useful.</td></tr>
+              </tbody>
+            </table>
+
+            <div class="callout success">
+              <strong>MVP test:</strong> can a merchant receive a buy-back request, enter it in Wix, propose a price, have the customer approve, receive the item, review it, and issue a coupon — entirely within Wix? <strong>Yes.</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FUNCTIONAL REQUIREMENTS -->
+      <section class="section" id="section-functional">
+        <div class="section-head">
+          <div class="section-eyebrow">Section 3</div>
+          <h2>Functional Requirements</h2>
+        </div>
+
+        <div class="tabs" data-tabgroup="functional">
+          <button class="tab active" data-tab="buybacks">Buy Backs Module</button>
+          <button class="tab" data-tab="detail">Detail Views</button>
+          <button class="tab" data-tab="placeholders">Placeholder Pages</button>
+          <button class="tab" data-tab="ux">UX</button>
+          <button class="tab" data-tab="instrumentation">Instrumentation</button>
+          <button class="tab" data-tab="permissions">Permissions</button>
+          <button class="tab" data-tab="billing">Billing</button>
+          <button class="tab" data-tab="onboarding">Onboarding</button>
+        </div>
+
+        <div class="tab-panels">
+          <div class="tab-panel active" data-panel="buybacks">
+            <p>The Buy Backs module is a top-level sidebar pillar in Wix Stores, with a <span class="badge new">NEW</span> badge, positioned between Sales and Catalog. It is expanded by default on first load. The default landing page is Requests.</p>
+
+            <div class="subtabs" data-tabgroup="bb-sub">
+              <button class="subtab active" data-tab="requests">Requests</button>
+              <button class="subtab" data-tab="receivables">Receivables</button>
+              <button class="subtab" data-tab="relisting">Relisting</button>
+              <button class="subtab" data-tab="bb-analytics">Analytics</button>
+            </div>
+
+            <div class="subtab-panels">
+              <div class="subtab-panel active" data-panel="requests">
+                <h4>Requests — Intake and pricing workflow (pre-shipment)</h4>
+                <div class="states-strip">
+                  <div class="state">Submitted</div><div class="state-arrow">→</div>
+                  <div class="state">Proposed</div><div class="state-arrow">→</div>
+                  <div class="state">Approved</div>
+                  <div class="state-branch">(Declined branches from Proposed)</div>
+                </div>
+
+                <h5>Stats bar</h5>
+                <div class="stat-strip">
+                  <div class="stat-pill">Total Requests</div>
+                  <div class="stat-pill">Awaiting Proposal</div>
+                  <div class="stat-pill">Proposed — awaiting customer</div>
+                  <div class="stat-pill">Approved — awaiting shipment</div>
+                </div>
+
+                <h5>Tabs</h5>
+                <div class="stat-strip">
+                  <div class="stat-pill alt">All</div>
+                  <div class="stat-pill alt">Submitted</div>
+                  <div class="stat-pill alt">Proposed</div>
+                  <div class="stat-pill alt">Approved</div>
+                  <div class="stat-pill alt">Declined</div>
+                </div>
+
+                <h5>Table columns</h5>
+                <p class="muted">Request ID · Date · Customer · Product · Category · Condition · Proposed Price · Status · Action</p>
+
+                <h5>Action by status</h5>
+                <table class="data-table">
+                  <thead><tr><th>Status</th><th>Action</th></tr></thead>
+                  <tbody>
+                    <tr><td><span class="badge">Submitted</span></td><td>"Send Proposal" — opens price-entry form</td></tr>
+                    <tr><td><span class="badge primary">Proposed</span></td><td>"Awaiting Customer" — read-only</td></tr>
+                    <tr><td><span class="badge success">Approved</span></td><td>"Print Receipt" — generates printable label with buy-back metadata</td></tr>
+                    <tr><td><span class="badge danger">Declined</span></td><td>None</td></tr>
+                  </tbody>
+                </table>
+
+                <h5>Business rules</h5>
+                <ul class="bullet-list">
+                  <li>Buy-back requests are scoped to the merchant's accepted product categories. The item does not need to have been purchased from this merchant — a merchant whose accepted categories include Apple products will accept any iPhone.</li>
+                  <li>Digital product categories are excluded from the category picker.</li>
+                  <li>Proposed price is denominated in store credit, not cash.</li>
+                </ul>
+
+                <h5>Edge cases</h5>
+                <ul class="bullet-list">
+                  <li><strong>Category not on accepted list:</strong> block submission with explanation of eligible categories.</li>
+                  <li><strong>Incomplete photo uploads:</strong> warn the customer but allow submission.</li>
+                  <li><strong>Guest vs. logged-in customer:</strong> <em>[Assumption: guest submissions supported; customer provides email for proposal notification. Requires platform-team confirmation.]</em></li>
+                  <li><strong>Duplicate submissions for the same item:</strong> out of scope for MVP.</li>
+                </ul>
+              </div>
+
+              <div class="subtab-panel" data-panel="receivables">
+                <h4>Receivables — Fulfillment and condition review (post-shipment)</h4>
+                <div class="states-strip">
+                  <div class="state">In Transit</div><div class="state-arrow">→</div>
+                  <div class="state">Received</div><div class="state-arrow">→</div>
+                  <div class="state">Approved</div><div class="state-or">|</div><div class="state">Rejected</div>
+                </div>
+
+                <h5>Stats bar</h5>
+                <div class="stat-strip">
+                  <div class="stat-pill">In Transit</div>
+                  <div class="stat-pill">Received — awaiting review</div>
+                  <div class="stat-pill">Approved this month</div>
+                  <div class="stat-pill">Coupons Issued (₪)</div>
+                </div>
+
+                <h5>Tabs</h5>
+                <div class="stat-strip">
+                  <div class="stat-pill alt">All</div>
+                  <div class="stat-pill alt">In Transit</div>
+                  <div class="stat-pill alt">Received</div>
+                  <div class="stat-pill alt">Approved</div>
+                  <div class="stat-pill alt">Rejected</div>
+                </div>
+
+                <h5>Table columns</h5>
+                <p class="muted">Request ID · Customer · Product · Stated Condition · Carrier Status · Days in Transit · Review Outcome · Coupon Issued · Status · Action</p>
+
+                <div class="callout primary">
+                  <strong>Condition review rule:</strong> if reviewed condition matches stated, item is <strong>Approved</strong> and a coupon equal to the proposed price is issued. If condition is lower, item is <strong>Rejected</strong>.
+                </div>
+
+                <div class="callout primary">
+                  <strong>Coupon issuance:</strong> on approval, a store-credit coupon is generated and linked to the originating request ID. Redeemable storewide, not restricted to the buy-back's product category.
+                </div>
+
+                <h5>Edge cases</h5>
+                <ul class="bullet-list">
+                  <li><strong>Item arrives damaged beyond usable condition:</strong> merchant records a rejection reason internally. Customer-facing rejection reason out of scope for MVP.</li>
+                  <li><strong>Revised lower offer on rejection:</strong> <em>[Assumption: out of scope for MVP; binary approve/reject only. Negotiation flow is a Phase 3 consideration.]</em></li>
+                </ul>
+              </div>
+
+              <div class="subtab-panel" data-panel="relisting">
+                <h4>Relisting — Pre-owned inventory management (post-approval)</h4>
+                <div class="states-strip">
+                  <div class="state">Draft</div><div class="state-arrow">→</div>
+                  <div class="state">Live</div><div class="state-arrow">→</div>
+                  <div class="state">Sold</div>
+                </div>
+
+                <h5>Stats bar</h5>
+                <div class="stat-strip">
+                  <div class="stat-pill">Total Pre-owned Listed</div>
+                  <div class="stat-pill">Live</div>
+                  <div class="stat-pill">Sold</div>
+                  <div class="stat-pill">Pre-owned Revenue (₪)</div>
+                </div>
+
+                <h5>Tabs</h5>
+                <div class="stat-strip">
+                  <div class="stat-pill alt">All</div>
+                  <div class="stat-pill alt">Draft</div>
+                  <div class="stat-pill alt">Live</div>
+                  <div class="stat-pill alt">Sold</div>
+                </div>
+
+                <h5>Table columns</h5>
+                <p class="muted">Thumbnail · Item Name · Category · Condition · Original Price · Listed Price · Discount % · Photos · Status · Action ("Edit")</p>
+
+                <div class="callout warning">
+                  <strong>Pricing rule:</strong> pre-owned price is set by the merchant. No automatic pricing in Phase 2. <em>[Assumption: A suggested pricing range based on condition and category history is a Phase 4 enhancement.]</em>
+                </div>
+                <div class="callout warning">
+                  <strong>Catalog integration:</strong> approved/relisted items appear in the catalog with a "Pre-owned" label alongside new inventory. <em>[Assumption: Requires a new product-type designation in the Wix catalog data model. Confirmation with the Catalog team needed.]</em>
+                </div>
+              </div>
+
+              <div class="subtab-panel" data-panel="bb-analytics">
+                <h4>Analytics — Program health visibility</h4>
+
+                <h5>KPI cards</h5>
+                <div class="kpi-row tight">
+                  <div class="kpi small"><div class="kpi-label">Credits Issued</div><div class="kpi-value">₪ ··</div><div class="kpi-meta">Total currency value</div></div>
+                  <div class="kpi small"><div class="kpi-label">Credits Redeemed</div><div class="kpi-value">₪ ··</div><div class="kpi-meta">Currency + redemption rate %</div></div>
+                  <div class="kpi small"><div class="kpi-label">Buy Backs Completed</div><div class="kpi-value">··</div><div class="kpi-meta">Count</div></div>
+                  <div class="kpi small"><div class="kpi-label">Profit on Buy Backs</div><div class="kpi-value">₪ ··</div><div class="kpi-meta">Pre-owned Revenue − Credits Issued</div></div>
+                  <div class="kpi small"><div class="kpi-label">Avg. Credit / Buy Back</div><div class="kpi-value">₪ ··</div><div class="kpi-meta">&nbsp;</div></div>
+                  <div class="kpi small"><div class="kpi-label">Pre-owned Revenue</div><div class="kpi-value">₪ ··</div><div class="kpi-meta">&nbsp;</div></div>
+                </div>
+
+                <h5>Charts</h5>
+                <ol class="numbered-list">
+                  <li><strong>Credits Issued by Month</strong> — 6-month bar chart</li>
+                  <li><strong>Buy Backs by Condition</strong> — bar breakdown across Excellent / Good / Fair / Poor</li>
+                  <li><strong>Top Categories</strong> — ranked list with horizontal progress bars showing volume share</li>
+                </ol>
+
+                <div class="callout">
+                  <strong>Out of scope for Phase 2:</strong> funnel chart (Submitted → Sold), cohort analysis, CSV/PDF export, date-range picker.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="detail">
+            <h3>Detail Views</h3>
+            <div class="cards-grid">
+              <div class="info-card">
+                <h4>Order Detail</h4>
+                <p>Triggered by clicking any order row. Displays: customer info, line items with thumbnails, payment status, fulfillment status, event timeline, action buttons (Refund, Mark Fulfilled, Print Invoice).</p>
+                <p class="muted">Back navigation returns to the Orders list with the same tab active.</p>
+              </div>
+              <div class="info-card">
+                <h4>Product Detail</h4>
+                <p>Triggered by clicking "Edit" on a product. Displays: image gallery placeholder, name, description, pricing, inventory, variants list, SEO section.</p>
+                <p class="muted">In-page edits are held in session state (<code>ST.draftProduct</code>). No persistence in the prototype.</p>
+              </div>
+              <div class="info-card">
+                <h4>Contact Detail</h4>
+                <p>Triggered by clicking a contact row. Displays: profile card, activity timeline (orders placed, forms submitted, emails opened — mocked in prototype), notes section, tags.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="placeholders">
+            <h3>Placeholder Pages (Phase 1 Prototype)</h3>
+            <p>Five placeholder pages replaced with mocked content, using the existing component vocabulary (<code>cards-row</code>, <code>tbl-container</code>, <code>widget</code>):</p>
+            <div class="placeholder-grid">
+              <div class="placeholder-card"><div class="ph-num">1</div><h4>Abandoned Carts</h4><p>Table with customer, cart items, last activity timestamp, recovery email status.</p></div>
+              <div class="placeholder-card"><div class="ph-num">2</div><h4>Discounts</h4><p>List of active / scheduled / expired discount codes with usage counts.</p></div>
+              <div class="placeholder-card"><div class="ph-num">3</div><h4>Pages and Menu</h4><p>Tree of site pages with home page marker and "Add Page" button.</p></div>
+              <div class="placeholder-card"><div class="ph-num">4</div><h4>Forms and Submissions</h4><p>Form list with submission counts; click to see a submissions table.</p></div>
+              <div class="placeholder-card"><div class="ph-num">5</div><h4>SEO Tools</h4><p>Checklist page with meta title, sitemap, and indexing status progress indicators.</p></div>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="ux">
+            <h3>UX</h3>
+            <div class="info-card">
+              <h4>Navigation</h4>
+              <p>Buy Backs is a top-level sidebar entry with a <span class="badge new">NEW</span> badge, between Sales and Catalog, expanded by default. Default landing page on first load is Requests.</p>
+            </div>
+            <div class="info-card">
+              <h4>Component reuse</h4>
+              <p>Buy Backs pages reuse the existing component vocabulary — <code>cards-row</code>, <code>tbl-container</code>, <code>widget</code>, badge, tab-bar — consistent with the Orders and Analytics pages. No net-new components are introduced.</p>
+            </div>
+            <div class="info-card">
+              <h4>Entity relationships</h4>
+              <ul class="bullet-list">
+                <li>A <code>BuyBackRequest</code> has one Customer, one ProductCategory, one Condition, one ProposedPrice, and one Status.</li>
+                <li>A <code>BuyBackReceivable</code> is a 1:1 extension of an Approved <code>BuyBackRequest</code>.</li>
+                <li>A <code>BuyBackCoupon</code> is linked 1:1 to an Approved <code>BuyBackReceivable</code>.</li>
+                <li>A <code>PreOwnedListing</code> is a 1:1 extension of an Approved <code>BuyBackReceivable</code> and becomes a Product in the catalog on publish.</li>
+              </ul>
+            </div>
+            <div class="info-card">
+              <h4>Wireframe</h4>
+              <p>The Phase 1 prototype HTML file serves as the lo-fi wireframe for this phase. Production Phase 2 requires Figma designs before engineering begins.</p>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="instrumentation">
+            <h3>Analytics (Instrumentation)</h3>
+            <div class="callout warning">
+              <strong>Assumption — internal events:</strong> for the production build, engineering will instrument the following events. These feed the Analytics sub-section and product-health dashboards.
+            </div>
+            <div class="event-grid">
+              <code class="event">buyback.request.submitted</code>
+              <code class="event">buyback.proposal.sent</code>
+              <code class="event">buyback.customer.approved</code>
+              <code class="event">buyback.customer.declined</code>
+              <code class="event">buyback.item.received</code>
+              <code class="event">buyback.item.approved</code>
+              <code class="event">buyback.item.rejected</code>
+              <code class="event">buyback.coupon.issued</code>
+              <code class="event">buyback.coupon.redeemed</code>
+              <code class="event">buyback.listing.published</code>
+            </div>
+            <p><strong>Customer-facing:</strong> the Analytics sub-section is the customer-facing analytics surface for the buy-back program. No additional external reporting beyond the described KPI cards and charts is planned for Phase 2.</p>
+          </div>
+
+          <div class="tab-panel" data-panel="permissions">
+            <h3>Permissions</h3>
+            <div class="callout warning">
+              <strong>Assumption:</strong> The following permissions model is proposed and requires confirmation with the Wix platform team.
+            </div>
+            <table class="data-table">
+              <thead><tr><th>Action</th><th>Who can perform</th></tr></thead>
+              <tbody>
+                <tr><td>Access Buy Backs module</td><td>Store owners, Admins, Staff (read + process)</td></tr>
+                <tr><td>Configure accepted buy-back categories</td><td>Store owners, Admins only</td></tr>
+                <tr><td>Send a proposal</td><td>Store owners, Admins, Staff</td></tr>
+                <tr><td>Issue a coupon</td><td>Store owners, Admins, Staff</td></tr>
+                <tr><td>Publish a pre-owned listing</td><td>Store owners, Admins only</td></tr>
+                <tr><td>View Buy Backs Analytics</td><td>Store owners, Admins</td></tr>
+              </tbody>
+            </table>
+            <div class="cards-grid two-col">
+              <div class="info-card"><h4>Plan tier</h4><p><em>[Assumption: Buy Backs is available on Wix Business and Business Elite plans. Not available on Free, Core, or Light plans.]</em></p></div>
+              <div class="info-card"><h4>Feature flag</h4><p><em>[Assumption: ships behind a feature flag, enabled by default for eligible plan tiers after production launch.]</em></p></div>
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="billing">
+            <h3>Billing</h3>
+            <div class="callout warning">
+              <strong>Assumption:</strong> Included in existing Business and Business Elite plans at no additional cost at launch. Coupon issuance flows through existing Wix Payments coupon infrastructure with no new billing line items. A potential upsell — higher-volume buy-back processing or an advanced analytics add-on — is a Phase 4 consideration. No usage-based billing impact at MVP.
+            </div>
+          </div>
+
+          <div class="tab-panel" data-panel="onboarding">
+            <h3>Onboarding</h3>
+            <div class="callout warning">
+              <strong>Assumption:</strong> Buy Backs is surfaced in the Wix Stores setup checklist for merchants with physical product categories. On first visit to Requests, a contextual tooltip explains the three-step workflow (Requests → Receivables → Relisting). An empty-state view with a "How buy-backs work" walkthrough card is shown when no requests exist. Existing qualifying merchants are notified via an in-product banner at launch.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OPERATIONAL REQUIREMENTS -->
+      <section class="section" id="section-operational">
+        <div class="section-head">
+          <div class="section-eyebrow">Section 4</div>
+          <h2>Operational Requirements</h2>
+        </div>
+
+        <div class="callout warning">
+          <strong>Assumption:</strong> Operational requirements below are for the production build. They do not apply to the current prototype phase, which has no backend.
+        </div>
+
+        <div class="tabs" data-tabgroup="operational">
+          <button class="tab active" data-tab="migration">Migration</button>
+          <button class="tab" data-tab="parity">Deployment Parity</button>
+          <button class="tab" data-tab="llm">LLM Agnosticism</button>
+          <button class="tab" data-tab="scale">Enterprise Scale</button>
+        </div>
+
+        <div class="tab-panels">
+          <div class="tab-panel active" data-panel="migration">
+            <h3>Migration</h3>
+            <div class="info-card"><h4>Data migration</h4><p>Not applicable. Buy Backs is a new capability with no existing data to transform or backfill.</p></div>
+            <div class="info-card"><h4>User migration</h4><p>Existing merchants do not need to take any action. The module is enabled automatically for eligible plan tiers. No reconfiguration of existing settings is required.</p></div>
+            <div class="info-card"><h4>Sunsetting</h4><p>No existing behavior is being replaced. No deprecation period required.</p></div>
+            <div class="info-card"><h4>Pre-collection</h4><p>Not applicable. Buy-back data is generated by merchant actions from day one of the feature launch.</p></div>
+          </div>
+          <div class="tab-panel" data-panel="parity">
+            <h3>Deployment Parity</h3>
+            <div class="callout warning">
+              <strong>Assumption:</strong> Wix is a SaaS platform with no on-premise deployment model. Multi-region data residency considerations may apply to coupon and payment data stored as part of the buy-back record; this should be reviewed with the Wix infrastructure team before production design is finalized. No deployment parity gaps are expected.
+            </div>
+          </div>
+          <div class="tab-panel" data-panel="llm">
+            <h3>LLM Agnosticism</h3>
+            <p>The MVP Buy Backs module has no LLM or AI dependency. Not applicable for Phase 2.</p>
+            <p>A Phase 4 automatic pricing suggestion feature may introduce an LLM dependency. LLM agnosticism review should be conducted at that point, not now.</p>
+          </div>
+          <div class="tab-panel" data-panel="scale">
+            <h3>Enterprise Scale</h3>
+            <div class="callout warning">
+              <strong>Assumption:</strong> The primary customer for Buy Backs is SMB merchants. The MVP data model and workflow should support up to ~500 active buy-back requests per merchant per month without architectural changes. High-volume recommerce operators (thousands of requests per day) are a Phase 4 concern. Performance bounds should be confirmed with engineering before Phase 2 launch.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- OPEN QUESTIONS -->
+      <section class="section" id="section-open">
+        <div class="section-head">
+          <div class="section-eyebrow">Section 5</div>
+          <h2>Open Questions</h2>
+        </div>
+
+        <div class="oq-list">
+          <div class="oq">
+            <div class="oq-num">1</div>
+            <div class="oq-body">
+              <h4>Customer notification channel</h4>
+              <p>How are customers notified of the merchant's buy-back proposal? Email, Wix inbox, SMS, or in-app notification? Affects the approval flow UX and the carrier pickup scheduling step.</p>
+              <div class="oq-owner">Owner: Product + Platform</div>
+            </div>
+          </div>
+          <div class="oq">
+            <div class="oq-num">2</div>
+            <div class="oq-body">
+              <h4>Carrier integration scope</h4>
+              <p>Which carrier API(s) should Phase 3 integrate with for label generation? Extension of Wix Shipping or net-new direct integration?</p>
+              <div class="oq-owner">Owner: Platform / Shipping</div>
+            </div>
+          </div>
+          <div class="oq">
+            <div class="oq-num">3</div>
+            <div class="oq-body">
+              <h4>Accepted category configuration</h4>
+              <p>How does a merchant define their accepted buy-back categories? Derived from existing product catalog categories, or a separate configuration step?</p>
+              <div class="oq-owner">Owner: Product</div>
+            </div>
+          </div>
+          <div class="oq">
+            <div class="oq-num">4</div>
+            <div class="oq-body">
+              <h4>Rejection with revised offer</h4>
+              <p>When a received item is Rejected, can the merchant make a revised lower offer rather than a binary reject? Would reduce abandonment but adds flow complexity.</p>
+              <div class="oq-owner">Owner: Product (Phase 3 decision)</div>
+            </div>
+          </div>
+          <div class="oq">
+            <div class="oq-num">5</div>
+            <div class="oq-body">
+              <h4>Currency</h4>
+              <p>The prototype uses ₪ (NIS). Should it localize to $ for a broader audience? In production, the analytics currency should default to the merchant's configured store currency.</p>
+              <div class="oq-owner">Owner: Product</div>
+            </div>
+          </div>
+          <div class="oq">
+            <div class="oq-num">6</div>
+            <div class="oq-body">
+              <h4>Hash routing</h4>
+              <p>Should buy-back detail views be URL-hash routed (<code>#/buybacks/requests/1001</code>) so links survive a page refresh? Low-cost improvement worth deciding before M1.</p>
+              <div class="oq-owner">Owner: Engineering</div>
+            </div>
+          </div>
+          <div class="oq">
+            <div class="oq-num">7</div>
+            <div class="oq-body">
+              <h4>Guest submissions</h4>
+              <p>Are buy-back requests from non-logged-in customers supported? If so, what is the identity and notification model?</p>
+              <div class="oq-owner">Owner: Product + Platform</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- APPENDIX -->
+      <section class="section" id="section-appendix">
+        <div class="section-head">
+          <div class="section-eyebrow">Appendix</div>
+          <h2>Prototype Scope Summary</h2>
+        </div>
+
+        <p>This section captures the prototype-specific constraints and coverage targets. It does not apply to the production build.</p>
+
+        <div class="cards-grid two-col">
+          <div class="info-card">
+            <h4>Architecture</h4>
+            <p>Single static HTML file. Vanilla JS + inline CSS. State object <code>ST</code> drives all rendering via <code>renderApp()</code>. No backend, no persistence, no build step.</p>
+          </div>
+          <div class="info-card">
+            <h4>Coverage target</h4>
+            <p>≥ 25 of ~40 sidebar entries land on a real page (up from 11 today).</p>
+          </div>
+          <div class="info-card">
+            <h4>File size target</h4>
+            <p>Under ~3,000 lines / ~150 KB.</p>
+          </div>
+          <div class="info-card">
+            <h4>Acceptance — Buy Backs prototype</h4>
+            <ul class="bullet-list compact">
+              <li>Top-level sidebar pillar with NEW badge and four sub-items.</li>
+              <li>Refresh lands on Requests with Buy Backs expanded and Requests active.</li>
+              <li>Each sub-page renders mocked data, has working status tabs, and computes stats from data.</li>
+              <li>Old single-page <code>pgBuyBacks</code> removed. Old Sales › Buy Backs sub-entry removed.</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="block-title">Non-goals (prototype)</h3>
+        <ul class="bullet-list">
+          <li>No backend, database, or persistence beyond <code>ST</code>.</li>
+          <li>No build pipeline, bundler, framework, or TypeScript.</li>
+          <li>No real authentication, payments, or third-party integrations.</li>
+          <li>No automated tests.</li>
+        </ul>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -114,7 +114,7 @@ h1,h2,h3,.page-hdr h1,.wix-logo{font-family:"Wix Madefor Display","Wix Madefor T
 .tbl-toolbar .tt-search{display:flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid #dde3ea;border-radius:20px;font-size:13px;background:#fff;min-width:200px;}
 .tbl-toolbar .tt-search input{border:none;outline:none;font-size:13px;color:#131720;background:transparent;flex:1;}
 .tbl-toolbar .tt-search input::placeholder{color:#9fa8b3;}
-.tbl-container{background:#fff;border:1px solid #dfe5eb;border-radius:0 0 8px 8px;overflow:hidden;box-shadow:0 6px 6px 0 rgba(22,45,61,0.06);}
+.tbl-container{background:#fff;border:1px solid #dfe5eb;border-radius:0 0 8px 8px;overflow:visible;box-shadow:0 6px 6px 0 rgba(22,45,61,0.06);}
 table{width:100%;border-collapse:collapse;}
 table th{text-align:left;font-size:11px;font-weight:600;color:#6b7889;padding:14px 16px;border-bottom:1px solid #dfe5eb;white-space:nowrap;background:#fff;text-transform:uppercase;letter-spacing:0.4px;}
 table td{padding:16px;border-bottom:1px solid #eef1f4;font-size:15px;color:#162d3d;vertical-align:middle;line-height:1.4;}
@@ -202,9 +202,22 @@ table th input[type=checkbox],table td input[type=checkbox]{width:15px;height:15
 .fbar input:focus{border-color:#116dff;}
 .fbar .fbar-btn{padding:8px 16px;border:1px solid #dde3ea;background:#fff;border-radius:20px;font-size:13px;cursor:pointer;color:#32536a;white-space:nowrap;}
 .fbar .fbar-btn:hover{background:#f7f8fa;}
-.acell{display:flex;gap:6px;}
+.acell{display:flex;gap:6px;align-items:center;justify-content:flex-end;}
 .acell button{padding:5px 12px;font-size:12px;border:1px solid #dde3ea;background:#fff;border-radius:20px;cursor:pointer;color:#32536a;font-weight:500;}
 .acell button:hover{background:#f7f8fa;}
+.row-menu-wrap{position:relative;display:inline-flex;}
+.row-menu-btn{border:none;background:transparent;cursor:pointer;color:#6b7889;display:inline-flex;align-items:center;justify-content:center;padding:4px;line-height:0;}
+.row-menu-btn:hover{color:#162d3d;}
+.row-menu-btn.open{color:#116dff;}
+.row-menu-panel{position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1px solid #dfe5eb;border-radius:8px;box-shadow:0 8px 24px rgba(22,45,61,0.18);min-width:220px;z-index:60;padding:6px 0;cursor:default;text-align:left;}
+.row-menu-item{display:flex;align-items:center;gap:10px;padding:8px 14px;font-size:13px;color:#162d3d;cursor:pointer;font-weight:500;white-space:nowrap;}
+.row-menu-item:hover{background:#f5fafe;}
+.row-menu-item.primary{color:#116dff;}
+.row-menu-item.primary:hover{background:#eaf2ff;}
+.row-menu-item.danger{color:#d62b39;}
+.row-menu-item.danger:hover{background:#fdecee;}
+.row-menu-divider{height:1px;background:#eef1f4;margin:4px 0;}
+.row-menu-ico{width:14px;height:14px;display:inline-flex;align-items:center;justify-content:center;color:inherit;flex-shrink:0;}
 .siteinfo-bar{background:#fffbea;border:1px solid #f5e6a0;border-radius:8px;padding:10px 16px;display:flex;align-items:center;gap:16px;margin-bottom:20px;font-size:13px;color:#6b5700;}
 .siteinfo-bar .si-tag{background:#fff3c4;border:1px solid #f5e6a0;border-radius:4px;padding:2px 8px;font-size:11px;font-weight:600;color:#6b5700;text-transform:uppercase;}
 .siteinfo-bar a{color:#116dff;text-decoration:none;font-weight:500;}
@@ -229,6 +242,20 @@ table th input[type=checkbox],table td input[type=checkbox]{width:15px;height:15
 .filter-by-lbl{font-size:14px;color:#6b7889;}
 .filter-by-dd{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 12px;border:1px solid #dde3ea;border-radius:6px;font-size:14px;background:#fff;cursor:pointer;color:#131720;min-width:180px;}
 .filter-by-dd:hover{border-color:#116dff;}
+.cond-stack{display:flex;flex-direction:column;gap:6px;}
+.cond-line{display:flex;align-items:center;gap:8px;font-size:14px;}
+.cond-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;letter-spacing:0.4px;flex-shrink:0;min-width:38px;text-align:center;}
+.cond-tag.new{background:#e8f1ff;color:#0f62e6;}
+.cond-tag.used{background:#f5eeff;color:#7c3aed;}
+.cond-val{color:#162d3d;}
+.cond-add{color:#116dff;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;}
+.cond-add:hover{text-decoration:underline;}
+.cond-line .inv-select,.cond-line .inv-input{width:160px;padding:5px 10px;font-size:13px;}
+.inv-tabs{display:flex;gap:6px;margin-left:14px;}
+.inv-tab{padding:6px 14px;border:1px solid #dde3ea;border-radius:18px;font-size:13px;color:#6b7889;cursor:pointer;background:#fff;display:inline-flex;align-items:center;gap:6px;}
+.inv-tab:hover{border-color:#116dff;color:#116dff;}
+.inv-tab.active{background:#162d3d;border-color:#162d3d;color:#fff;}
+.inv-tab .inv-tab-count{font-size:11px;opacity:0.8;}
 </style>
 </head>
 <body>
@@ -260,6 +287,25 @@ var ICO={
   filter:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>',
   cols:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>',
   plus:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>',
+  dots:'<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.7"/><circle cx="12" cy="12" r="1.7"/><circle cx="19" cy="12" r="1.7"/></svg>',
+  eye:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>',
+  edit:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>',
+  send:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>',
+  mail:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
+  truck:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>',
+  printer:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>',
+  copy:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>',
+  archive:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="21 8 21 21 3 21 3 8"/><rect x="1" y="3" width="22" height="5"/><line x1="10" y1="12" x2="14" y2="12"/></svg>',
+  trash:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>',
+  ban:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>',
+  check2:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="20 6 9 17 4 12"/></svg>',
+  tag:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
+  upload:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>',
+  download:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+  refresh:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12a9 9 0 019-9 9.75 9.75 0 016.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 01-9 9 9.75 9.75 0 01-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>',
+  info:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>',
+  question:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
+  camera:'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>',
   star:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
   buybacks:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12a9 9 0 019-9 9.75 9.75 0 016.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 01-9 9 9.75 9.75 0 01-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>',
   automations:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
@@ -353,7 +399,7 @@ var NAV = [
 ];
 
 // ===== STATE =====
-var ST = {page:"bbanalytics", activeNav:"bb-analytics", openMenus:{buybacks:true}, orderTab:"all", bbReqTab:"all", bbRecvTab:"all", bbRelTab:"all", openDD:null, promoBannerVisible:true};
+var ST = {page:"bbanalytics", activeNav:"bb-analytics", openMenus:{buybacks:true}, orderTab:"all", bbReqTab:"all", bbRecvTab:"all", bbRelTab:"all", invCond:"all", openDD:null, openRowMenu:null, promoBannerVisible:true};
 
 // ===== PAGE HEADER HELPER =====
 function pageHdr(title, sub, actions) {
@@ -380,6 +426,9 @@ function bind() {
   document.querySelectorAll("[data-otab]").forEach(function(el) {
     el.addEventListener("click", function(){ST.orderTab=el.getAttribute("data-otab");renderApp();});
   });
+  document.querySelectorAll("[data-inv-cond]").forEach(function(el) {
+    el.addEventListener("click", function(){ST.invCond=el.getAttribute("data-inv-cond");renderApp();});
+  });
   document.querySelectorAll("[data-tab-key]").forEach(function(el) {
     el.addEventListener("click", function(e){
       e.stopPropagation();
@@ -393,6 +442,15 @@ function bind() {
       e.stopPropagation();
       var k = el.getAttribute("data-dd");
       ST.openDD = ST.openDD === k ? null : k;
+      renderApp();
+    });
+  });
+  document.querySelectorAll("[data-row-menu]").forEach(function(el) {
+    el.addEventListener("click", function(e){
+      e.stopPropagation();
+      var k = el.getAttribute("data-row-menu");
+      ST.openRowMenu = ST.openRowMenu === k ? null : k;
+      ST.openDD = null;
       renderApp();
     });
   });
@@ -665,6 +723,138 @@ function bbToolbar(stateKey, tabs, counts, placeholder) {
 
 function bbMoney(s) { return parseInt(String(s).replace(/[^0-9]/g,""),10) || 0; }
 
+function rowMenu(key, items) {
+  var isOpen = ST.openRowMenu === key;
+  var panel = "";
+  if(isOpen) {
+    panel = '<div class="row-menu-panel">';
+    items.forEach(function(it) {
+      if(it === "-" || (it && it.divider)) {
+        panel += '<div class="row-menu-divider"></div>';
+      } else {
+        var cls = "row-menu-item" + (it.primary ? " primary" : "") + (it.danger ? " danger" : "");
+        var ic = '<span class="row-menu-ico">' + (it.icon || "") + '</span>';
+        panel += '<div class="' + cls + '">' + ic + '<span>' + it.label + '</span></div>';
+      }
+    });
+    panel += '</div>';
+  }
+  return '<span class="row-menu-wrap">'
+    + '<button class="row-menu-btn' + (isOpen?" open":"") + '" data-row-menu="' + key + '" title="More actions" type="button">' + ICO.dots + '</button>'
+    + panel
+    + '</span>';
+}
+
+function bbReqRowMenu(r) {
+  var items = [{label:"View request details", icon:ICO.eye}];
+  switch(r.status) {
+    case "Submitted":
+      items.push({label:"Send proposal", icon:ICO.send, primary:true});
+      items.push({label:"Request more product details", icon:ICO.question});
+      items.push({label:"Request more photos", icon:ICO.camera});
+      items.push({label:"Contact customer", icon:ICO.mail});
+      items.push("-");
+      items.push({label:"Decline request", icon:ICO.ban});
+      items.push({label:"Cancel & archive", icon:ICO.archive, danger:true});
+      break;
+    case "Proposed":
+      items.push({label:"Edit proposal", icon:ICO.edit});
+      items.push({label:"Resend proposal email", icon:ICO.mail});
+      items.push({label:"Request more product details", icon:ICO.question});
+      items.push({label:"Mark as approved", icon:ICO.check2});
+      items.push({label:"Contact customer", icon:ICO.mail});
+      items.push("-");
+      items.push({label:"Withdraw proposal", icon:ICO.ban});
+      items.push({label:"Cancel & archive", icon:ICO.archive, danger:true});
+      break;
+    case "Approved":
+      items.push({label:"Print shipping label", icon:ICO.printer, primary:true});
+      items.push({label:"Email shipping instructions", icon:ICO.mail});
+      items.push({label:"Request more product details", icon:ICO.question});
+      items.push({label:"Mark item received", icon:ICO.check2});
+      items.push("-");
+      items.push({label:"Cancel & archive", icon:ICO.archive, danger:true});
+      break;
+    case "Declined":
+      items.push({label:"Send counter proposal", icon:ICO.send});
+      items.push({label:"Request more product details", icon:ICO.question});
+      items.push({label:"Contact customer", icon:ICO.mail});
+      items.push("-");
+      items.push({label:"Archive", icon:ICO.archive});
+      items.push({label:"Delete request", icon:ICO.trash, danger:true});
+      break;
+  }
+  return rowMenu("req-" + r.id, items);
+}
+
+function bbRecvRowMenu(r) {
+  var items = [{label:"View shipment details", icon:ICO.eye}];
+  switch(r.status) {
+    case "In Transit":
+      items.push({label:"Track shipment", icon:ICO.truck, primary:true});
+      items.push({label:"Mark received", icon:ICO.check2});
+      items.push({label:"Contact customer", icon:ICO.mail});
+      items.push("-");
+      items.push({label:"Cancel buy-back", icon:ICO.ban, danger:true});
+      break;
+    case "Received":
+      items.push({label:"Review item", icon:ICO.check2, primary:true});
+      items.push({label:"Approve & issue coupon", icon:ICO.tag});
+      items.push({label:"Request more info", icon:ICO.question});
+      items.push({label:"Contact customer", icon:ICO.mail});
+      items.push("-");
+      items.push({label:"Reject item", icon:ICO.ban, danger:true});
+      break;
+    case "Approved":
+      items.push({label:"View coupon", icon:ICO.tag, primary:true});
+      items.push({label:"Resend coupon email", icon:ICO.mail});
+      items.push({label:"Send to relisting", icon:ICO.upload});
+      items.push({label:"Contact customer", icon:ICO.mail});
+      items.push("-");
+      items.push({label:"Revoke coupon", icon:ICO.ban, danger:true});
+      break;
+    case "Rejected":
+      items.push({label:"Return to customer", icon:ICO.refresh, primary:true});
+      items.push({label:"Print return label", icon:ICO.printer});
+      items.push({label:"Contact customer", icon:ICO.mail});
+      items.push("-");
+      items.push({label:"Archive", icon:ICO.archive});
+      break;
+  }
+  return rowMenu("recv-" + r.id, items);
+}
+
+function bbRelRowMenu(r, idx) {
+  var items = [];
+  switch(r.status) {
+    case "Draft":
+      items.push({label:"Edit listing", icon:ICO.edit, primary:true});
+      items.push({label:"Preview", icon:ICO.eye});
+      items.push({label:"Publish (go live)", icon:ICO.upload});
+      items.push({label:"Duplicate", icon:ICO.copy});
+      items.push("-");
+      items.push({label:"Delete draft", icon:ICO.trash, danger:true});
+      break;
+    case "Live":
+      items.push({label:"Edit listing", icon:ICO.edit, primary:true});
+      items.push({label:"Preview on site", icon:ICO.eye});
+      items.push({label:"Adjust price", icon:ICO.tag});
+      items.push({label:"Duplicate", icon:ICO.copy});
+      items.push({label:"Unpublish", icon:ICO.download});
+      items.push("-");
+      items.push({label:"Archive listing", icon:ICO.archive});
+      break;
+    case "Sold":
+      items.push({label:"View order", icon:ICO.eye, primary:true});
+      items.push({label:"View listing", icon:ICO.tag});
+      items.push({label:"Duplicate", icon:ICO.copy});
+      items.push("-");
+      items.push({label:"Archive listing", icon:ICO.archive});
+      break;
+  }
+  return rowMenu("rel-" + idx, items);
+}
+
 // ===== BUY BACKS — REQUESTS =====
 function pgBBRequests() {
   var REQ = [
@@ -716,7 +906,7 @@ function pgBBRequests() {
         + '<td>' + condIcon(r.cond) + '</td>'
         + '<td style="font-weight:600">' + r.proposed + '</td>'
         + '<td><span class="bdg ' + (statusBadge[r.status]||"gray") + '">' + r.status + '</span></td>'
-        + '<td><div class="acell">' + (actionFor[r.status] ? '<button>' + actionFor[r.status] + '</button>' : '<span style="color:#b4bec8;font-size:12px">—</span>') + '</div></td>'
+        + '<td><div class="acell">' + (actionFor[r.status] ? '<button>' + actionFor[r.status] + '</button>' : '<span style="color:#b4bec8;font-size:12px">—</span>') + bbReqRowMenu(r) + '</div></td>'
         + '</tr>');
     });
   }
@@ -778,7 +968,7 @@ function pgBBReceivables() {
         + '<td>' + (r.review==="-" ? '<span style="color:#b4bec8">—</span>' : '<span class="bdg ' + (reviewBadge[r.review]||"gray") + '">' + r.review + '</span>') + '</td>'
         + '<td style="font-weight:600">' + (r.coupon==="-" ? '<span style="color:#b4bec8;font-weight:400">—</span>' : r.coupon) + '</td>'
         + '<td><span class="bdg ' + (statusBadge[r.status]||"gray") + '">' + r.status + '</span></td>'
-        + '<td><div class="acell"><button>' + actBtn + '</button></div></td>'
+        + '<td><div class="acell"><button>' + actBtn + '</button>' + bbRecvRowMenu(r) + '</div></td>'
         + '</tr>');
     });
   }
@@ -825,9 +1015,10 @@ function pgBBRelisting() {
   if(filtered.length===0) {
     h.push('<tr><td colspan="10" style="text-align:center;color:#6b7889;padding:30px">No pre-owned listings in this status.</td></tr>');
   } else {
-    filtered.forEach(function(r) {
+    filtered.forEach(function(r, idx) {
       var orig = bbMoney(r.orig), listed = bbMoney(r.listed);
       var disc = orig > 0 ? Math.round((orig - listed) / orig * 100) : 0;
+      var actBtn = r.status==="Sold" ? "View Order" : "Edit";
       h.push('<tr>'
         + '<td><input type="checkbox"></td>'
         + '<td><div class="prod-cell"><div class="prod-thumb">' + r.e + '</div><div><div class="prod-name">' + r.n + '</div><div class="prod-sub">Pre-owned</div></div></div></td>'
@@ -838,7 +1029,7 @@ function pgBBRelisting() {
         + '<td><span class="bdg blue">-' + disc + '%</span></td>'
         + '<td style="color:#6b7889">' + r.photos + ' photos</td>'
         + '<td><span class="bdg ' + (statusBadge[r.status]||"gray") + '">' + r.status + '</span></td>'
-        + '<td><div class="acell"><button>Edit</button></div></td>'
+        + '<td><div class="acell"><button>' + actBtn + '</button>' + bbRelRowMenu(r, idx) + '</div></td>'
         + '</tr>');
     });
   }
@@ -900,18 +1091,18 @@ function pgBBAnalytics() {
 // ===== PRODUCTS PAGE =====
 function pgProducts() {
   var P = [
-    {n:"Ceramic Flower Vase",sk:"364215376135191",p:"₪270.00",inv:"In stock",v:1,e:"🏺"},
-    {n:"Minimalist Tote Bag",sk:"352144567823109",p:"₪20.00",inv:"In stock",v:2,e:"👜"},
+    {n:"Ceramic Flower Vase",sk:"364215376135191",usk:"364215376135191-U",p:"₪270.00",inv:"In stock",uinv:"2 in stock",v:1,e:"🏺"},
+    {n:"Minimalist Tote Bag",sk:"352144567823109",usk:"352144567823109-U",p:"₪20.00",inv:"In stock",uinv:"1 in stock",v:2,e:"👜"},
     {n:"Hydrating Eye Serum",sk:"364115376135191",p:"₪56.00",inv:"Out of stock",v:1,e:"🧪"},
-    {n:"Knitted Golf Sweater",sk:"326445132908745",p:"₪275.00",inv:"In stock",v:12,e:"👕"},
-    {n:"Round Eyeglasses",sk:"366615376135191",p:"₪80.00",inv:"In stock",v:1,e:"👓"},
-    {n:"Solid Wood Chair",sk:"36523641234523",p:"₪690.00",inv:"In stock",v:1,e:"🪑"},
+    {n:"Knitted Golf Sweater",sk:"326445132908745",usk:"326445132908745-U",p:"₪275.00",inv:"In stock",uinv:"3 in stock",v:12,e:"👕"},
+    {n:"Round Eyeglasses",sk:"366615376135191",usk:"366615376135191-U",p:"₪80.00",inv:"In stock",uinv:"1 in stock",v:1,e:"👓"},
+    {n:"Solid Wood Chair",sk:"36523641234523",usk:"36523641234523-U",p:"₪690.00",inv:"In stock",uinv:"1 in stock",v:1,e:"🪑"},
     {n:"Foaming Facial Cleanser",sk:"332456789012345",p:"₪85.00",inv:"In stock",v:4,e:"🧴"},
-    {n:"Baseball Cap",sk:"632835642834572",p:"₪68.00",inv:"In stock",v:1,e:"🧢"},
-    {n:"Stainless Steel Water Bottle",sk:"125634789045123",p:"₪199.00",inv:"Out of stock",v:1,e:"🧐"},
+    {n:"Baseball Cap",sk:"632835642834572",usk:"632835642834572-U",p:"₪68.00",inv:"In stock",uinv:"Out of stock",v:1,e:"🧢"},
+    {n:"Stainless Steel Water Bottle",sk:"125634789045123",usk:"125634789045123-U",p:"₪199.00",inv:"Out of stock",uinv:"2 in stock",v:1,e:"🧐"},
     {n:"Essential Oil Diffuser",sk:"126351351935",p:"₪119.00",inv:"In stock",v:1,e:"🪧"},
     {n:"Textured Loop Earrings",sk:"227345678901234",p:"₪269.00",inv:"In stock",v:1,e:"💍"},
-    {n:"Crew T-Shirt",sk:"21554345654",p:"₪120.00",inv:"In stock",v:4,e:"👕"}
+    {n:"Crew T-Shirt",sk:"21554345654",usk:"21554345654-U",p:"₪120.00",inv:"In stock",uinv:"5 in stock",v:4,e:"👕"}
   ];
   var uploadIco = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>';
   var slidersIco = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="14" y2="6"/><line x1="18" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="8" y2="12"/><line x1="12" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="16" y2="18"/><line x1="20" y1="18" x2="20" y2="18"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>';
@@ -933,13 +1124,23 @@ function pgProducts() {
     + '</tr></thead><tbody>');
   P.forEach(function(p) {
     var variantHtml = p.v>1 ? '<div class="variant-link">' + p.v + ' variants</div>' : '';
+    var skuCell = '<div class="cond-stack">'
+      + '<div class="cond-line"><span class="cond-tag new">NEW</span><span class="cond-val">' + p.sk + '</span></div>'
+      + '<div class="cond-line"><span class="cond-tag used">USED</span>'
+      + (p.usk ? '<span class="cond-val">' + p.usk + '</span>' : '<a class="cond-add" href="#" onclick="return false">+ Add SKU</a>')
+      + '</div></div>';
+    var invCell = '<div class="cond-stack">'
+      + '<div class="cond-line"><span class="cond-tag new">NEW</span><span class="cond-val">' + p.inv + '</span></div>'
+      + '<div class="cond-line"><span class="cond-tag used">USED</span>'
+      + (p.uinv ? '<span class="cond-val">' + p.uinv + '</span>' : '<a class="cond-add" href="#" onclick="return false">+ Enable used</a>')
+      + '</div></div>';
     h.push('<tr>'
       + '<td><input type="checkbox"></td>'
       + '<td><div class="prod-cell"><div class="prod-thumb">' + p.e + '</div><div><div class="prod-name">' + p.n + '</div>' + variantHtml + '</div></div></td>'
       + '<td>Physical</td>'
-      + '<td>' + p.sk + '</td>'
+      + '<td>' + skuCell + '</td>'
       + '<td>' + p.p + '</td>'
-      + '<td>' + p.inv + '</td>'
+      + '<td>' + invCell + '</td>'
       + '<td><button class="btn-dots" title="More">' + dotsIco + '</button></td>'
       + '</tr>');
   });
@@ -991,57 +1192,85 @@ function pgAnalytics() {
 // ===== INVENTORY PAGE =====
 function pgInventory() {
   var P = [
-    {n:"Baseball Cap",sk:"632835642834572",inv:"stock",e:"🧢"},
-    {n:"Ceramic Flower Vase",sk:"364215376135191",inv:"stock",e:"🏺"},
-    {n:"Crew T-Shirt",vr:"Large",sk:"21554345656",inv:"20",e:"👕"},
-    {n:"Crew T-Shirt",vr:"Medium",sk:"21554345655",inv:"0",e:"👕"},
-    {n:"Crew T-Shirt",vr:"Small",sk:"21554345654",inv:"15",e:"👕"},
-    {n:"Crew T-Shirt",vr:"X-Large",sk:"21554345657",inv:"6",e:"👕"},
-    {n:"Essential Oil Diffuser",sk:"126351351935",inv:"stock",e:"🪧"},
-    {n:"Foaming Facial Cleanser",vr:"100ml",sk:"632835642834503",inv:"stock",e:"🧴"},
-    {n:"Hydrating Eye Serum",sk:"364115376135191",inv:"out",e:"🧪"},
-    {n:"Knitted Golf Sweater",vr:"Medium · Sage",sk:"326445132908745",inv:"5",e:"👕"},
-    {n:"Minimalist Tote Bag",vr:"Lavender",sk:"352144567823109",inv:"stock",e:"👜"},
-    {n:"Round Eyeglasses",sk:"366615376135191",inv:"stock",e:"👓"}
+    {n:"Baseball Cap",sk:"632835642834572",inv:"stock",cond:"New",e:"🧢"},
+    {n:"Baseball Cap",sk:"632835642834572-U",inv:"out",cond:"Used",e:"🧢"},
+    {n:"Ceramic Flower Vase",sk:"364215376135191",inv:"stock",cond:"New",e:"🏺"},
+    {n:"Ceramic Flower Vase",sk:"364215376135191-U",inv:"2",cond:"Used",e:"🏺"},
+    {n:"Crew T-Shirt",vr:"Large",sk:"21554345656",inv:"20",cond:"New",e:"👕"},
+    {n:"Crew T-Shirt",vr:"Large",sk:"21554345656-U",inv:"2",cond:"Used",e:"👕"},
+    {n:"Crew T-Shirt",vr:"Medium",sk:"21554345655",inv:"0",cond:"New",e:"👕"},
+    {n:"Crew T-Shirt",vr:"Medium",sk:"21554345655-U",inv:"1",cond:"Used",e:"👕"},
+    {n:"Crew T-Shirt",vr:"Small",sk:"21554345654",inv:"15",cond:"New",e:"👕"},
+    {n:"Crew T-Shirt",vr:"X-Large",sk:"21554345657",inv:"6",cond:"New",e:"👕"},
+    {n:"Essential Oil Diffuser",sk:"126351351935",inv:"stock",cond:"New",e:"🪧"},
+    {n:"Foaming Facial Cleanser",vr:"100ml",sk:"632835642834503",inv:"stock",cond:"New",e:"🧴"},
+    {n:"Hydrating Eye Serum",sk:"364115376135191",inv:"out",cond:"New",e:"🧪"},
+    {n:"Knitted Golf Sweater",vr:"Medium · Sage",sk:"326445132908745",inv:"5",cond:"New",e:"👕"},
+    {n:"Knitted Golf Sweater",vr:"Medium · Sage",sk:"326445132908745-U",inv:"3",cond:"Used",e:"👕"},
+    {n:"Minimalist Tote Bag",vr:"Lavender",sk:"352144567823109",inv:"stock",cond:"New",e:"👜"},
+    {n:"Minimalist Tote Bag",vr:"Lavender",sk:"352144567823109-U",inv:"1",cond:"Used",e:"👜"},
+    {n:"Round Eyeglasses",sk:"366615376135191",inv:"stock",cond:"New",e:"👓"},
+    {n:"Round Eyeglasses",sk:"366615376135191-U",inv:"1",cond:"Used",e:"👓"},
+    {n:"Solid Wood Chair",sk:"36523641234523",inv:"stock",cond:"New",e:"🪑"},
+    {n:"Solid Wood Chair",sk:"36523641234523-U",inv:"1",cond:"Used",e:"🪑"},
+    {n:"Stainless Steel Water Bottle",sk:"125634789045123",inv:"out",cond:"New",e:"🧐"},
+    {n:"Stainless Steel Water Bottle",sk:"125634789045123-U",inv:"2",cond:"Used",e:"🧐"}
   ];
   var dotsIco = '<svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>';
   var infoIco = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#116dff" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>';
+  var counts = {all:P.length, New:0, Used:0};
+  P.forEach(function(p){ counts[p.cond] = (counts[p.cond]||0) + 1; });
+  var cond = ST.invCond || "all";
+  var filtered = P.filter(function(p){ return cond === "all" ? true : p.cond === cond; });
   var h = [];
   h.push('<div class="page-hdr"><div class="page-hdr-left">'
-    + '<h1>Inventory <span class="page-count">' + P.length + '</span></h1>'
-    + '<div class="page-sub">Your inventory updates whenever an order is placed. <a href="#" class="learn-more">Change this setting</a></div>'
+    + '<h1>Inventory <span class="page-count">' + filtered.length + '</span></h1>'
+    + '<div class="page-sub">Track stock for new and used items separately. Inventory updates whenever an order is placed. <a href="#" class="learn-more">Change this setting</a></div>'
     + '</div><div class="page-hdr-actions">'
     + '<button class="btn-link-text">View Detailed Report ' + ICO.chev + '</button>'
     + '</div></div>');
   h.push('<div class="info-banner">' + infoIco + ' Some fields are restricted for products managed by Modalyst.</div>');
   h.push('<div class="tbl-toolbar">'
     + '<div class="filter-by-wrap"><span class="filter-by-lbl">Filter by:</span><div class="filter-by-dd">All ' + ICO.chevDown + '</div></div>'
+    + '<div class="inv-tabs">'
+    + '<div class="inv-tab' + (cond==="all"?" active":"") + '" data-inv-cond="all">All <span class="inv-tab-count">' + counts.all + '</span></div>'
+    + '<div class="inv-tab' + (cond==="New"?" active":"") + '" data-inv-cond="New"><span class="cond-tag new">NEW</span> <span class="inv-tab-count">' + counts.New + '</span></div>'
+    + '<div class="inv-tab' + (cond==="Used"?" active":"") + '" data-inv-cond="Used"><span class="cond-tag used">USED</span> <span class="inv-tab-count">' + counts.Used + '</span></div>'
+    + '</div>'
     + '<div class="tt-right">'
     + '<div class="tt-filter-btn">' + ICO.filter + ' Filter</div>'
     + '<div class="tt-search">' + ICO.search + ' <input placeholder="Search..." readonly></div>'
     + '</div></div>');
   h.push('<div class="tbl-container"><table class="tbl-inventory"><thead><tr>'
     + '<th style="width:36px"><input type="checkbox"></th>'
-    + '<th>Name</th><th>SKU</th><th>Inventory</th><th style="width:60px"></th>'
+    + '<th>Name</th><th>Condition</th><th>SKU</th><th>Inventory</th><th style="width:60px"></th>'
     + '</tr></thead><tbody>');
-  P.forEach(function(p) {
-    var sub = p.vr ? '<div class="prod-sub">' + p.vr + '</div>' : '';
-    var invCell;
-    if(p.inv === "stock") {
-      invCell = '<div class="inv-select">In stock ' + ICO.chevDown + '</div>';
-    } else if(p.inv === "out") {
-      invCell = '<div class="inv-select">Out of stock ' + ICO.chevDown + '</div>';
-    } else {
-      invCell = '<input type="text" class="inv-input" value="' + p.inv + '" readonly>';
-    }
-    h.push('<tr>'
-      + '<td><input type="checkbox"></td>'
-      + '<td><div class="prod-cell"><div class="thumb-round">' + p.e + '</div><div><div class="prod-name">' + p.n + '</div>' + sub + '</div></div></td>'
-      + '<td>' + p.sk + '</td>'
-      + '<td>' + invCell + '</td>'
-      + '<td><button class="btn-dots" title="More">' + dotsIco + '</button></td>'
-      + '</tr>');
-  });
+  if(filtered.length === 0) {
+    h.push('<tr><td colspan="6" style="text-align:center;color:#6b7889;padding:30px">No inventory rows for this condition.</td></tr>');
+  } else {
+    filtered.forEach(function(p) {
+      var sub = p.vr ? '<div class="prod-sub">' + p.vr + '</div>' : '';
+      var invCell;
+      if(p.inv === "stock") {
+        invCell = '<div class="inv-select">In stock ' + ICO.chevDown + '</div>';
+      } else if(p.inv === "out") {
+        invCell = '<div class="inv-select">Out of stock ' + ICO.chevDown + '</div>';
+      } else {
+        invCell = '<input type="text" class="inv-input" value="' + p.inv + '" readonly>';
+      }
+      var condBdg = p.cond === "Used"
+        ? '<span class="cond-tag used">USED</span>'
+        : '<span class="cond-tag new">NEW</span>';
+      h.push('<tr>'
+        + '<td><input type="checkbox"></td>'
+        + '<td><div class="prod-cell"><div class="thumb-round">' + p.e + '</div><div><div class="prod-name">' + p.n + '</div>' + sub + '</div></div></td>'
+        + '<td>' + condBdg + '</td>'
+        + '<td>' + p.sk + '</td>'
+        + '<td>' + invCell + '</td>'
+        + '<td><button class="btn-dots" title="More">' + dotsIco + '</button></td>'
+        + '</tr>');
+    });
+  }
   h.push('</tbody></table></div>');
   return h.join("");
 }
@@ -1099,6 +1328,10 @@ document.addEventListener("DOMContentLoaded", function(){
   document.addEventListener("click", function(e){
     if(ST.openDD && !e.target.closest("[data-dd]") && !e.target.closest(".tt-dd-panel")) {
       ST.openDD = null;
+      renderApp();
+    }
+    if(ST.openRowMenu && !e.target.closest("[data-row-menu]") && !e.target.closest(".row-menu-panel")) {
+      ST.openRowMenu = null;
       renderApp();
     }
   });
