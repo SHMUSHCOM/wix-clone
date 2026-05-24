@@ -174,10 +174,18 @@ table th input[type=checkbox],table td input[type=checkbox]{width:15px;height:15
 .ac .acc{font-size:12px;color:#1b8a4e;margin-top:4px;font-weight:500;}
 .chart-box{background:#fff;border-radius:8px;border:1px solid #e8ecf0;padding:20px;margin-bottom:16px;}
 .chart-box h3{font-size:14px;font-weight:600;color:#131720;margin-bottom:16px;}
-.bars{display:flex;align-items:flex-end;gap:6px;height:120px;}
-.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;}
-.bar-fill{width:100%;background:#116dff;border-radius:3px 3px 0 0;min-height:3px;}
-.bar-lbl{font-size:10px;color:#9fa8b3;}
+.bars{display:flex;align-items:stretch;gap:10px;}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.bar-fill-area{height:140px;width:100%;display:flex;align-items:flex-end;}
+.bar-fill{width:100%;background:#116dff;border-radius:4px 4px 0 0;min-height:3px;transition:height 0.3s;}
+.bar-lbl{font-size:12px;color:#6b7889;}
+.pie-wrap{display:flex;align-items:center;gap:24px;padding:10px 0;}
+.pie{width:150px;height:150px;border-radius:50%;flex-shrink:0;box-shadow:0 1px 3px rgba(22,45,61,0.08);}
+.pie-legend{flex:1;display:flex;flex-direction:column;gap:10px;}
+.pie-legend .pie-item{display:flex;align-items:center;gap:8px;font-size:13px;color:#162d3d;}
+.pie-legend .pie-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
+.pie-legend .pie-lbl{flex:1;}
+.pie-legend .pie-pct{color:#6b7889;font-size:12px;font-weight:500;}
 .empty-pg{text-align:center;padding:60px 20px;color:#9fa8b3;}
 .empty-pg .eico{font-size:48px;margin-bottom:16px;}
 .empty-pg h3{font-size:18px;font-weight:600;color:#131720;margin-bottom:8px;}
@@ -824,33 +832,46 @@ function pgBBAnalytics() {
   var KPI = [
     {l:"Credits Issued",v:"₪4,280",c:"+12% vs last month"},
     {l:"Credits Redeemed",v:"₪2,950",c:"69% redemption rate"},
+    {l:"Credit-driven Revenue",v:"₪9,640",c:"₪6,690 beyond credit value"},
     {l:"Buy Backs Completed",v:"47",c:"+8 vs last month"},
     {l:"Profit on Buy Backs",v:"₪3,540",c:"+₪520 vs last month"},
     {l:"Avg. Credit per Buy Back",v:"₪91",c:"&mdash;"},
     {l:"Pre-owned Revenue",v:"₪7,820",c:"+18% vs last month"}
   ];
   var MD = [320,540,480,890,1020,1030], ML = ["Dec","Jan","Feb","Mar","Apr","May"], mxM = Math.max.apply(null,MD);
-  var CD = [12,22,9,4], CL = ["Excellent","Good","Fair","Poor"], CC = ["#1b8a4e","#0f62e6","#a8690a","#c0392b"], mxC = Math.max.apply(null,CD);
+  var CD = [12,22,9,4], CL = ["Excellent","Good","Fair","Poor"], CC = ["#1b8a4e","#0f62e6","#a8690a","#c0392b"];
+  var cTotal = CD.reduce(function(a,b){return a+b;},0);
   var CAT = [{n:"Apparel",cnt:18,pct:38},{n:"Accessories",cnt:11,pct:23},{n:"Home",cnt:9,pct:19},{n:"Furniture",cnt:5,pct:11},{n:"Lifestyle",cnt:4,pct:9}];
   var h = [];
-  h.push(pageHdr("Buy Backs Analytics", "See credits issued, redemption rate, and profit from buy-back activity."));
+  h.push(pageHdr("Buy Backs Analytics", "See credits issued, redemption, profit, and what credits drive in additional revenue."));
   h.push('<div class="ag">');
   KPI.forEach(function(m) { h.push('<div class="ac"><div class="acl">' + m.l + '</div><div class="acv">' + m.v + '</div><div class="acc">' + m.c + '</div></div>'); });
   h.push('</div>');
   h.push('<div class="chart-box"><h3>Credits Issued by Month</h3><div class="bars">');
   MD.forEach(function(v,i) {
-    h.push('<div class="bar-col"><div class="bar-fill" style="height:' + Math.round(v/mxM*100) + '%"></div><div class="bar-lbl">' + ML[i] + '</div></div>');
+    h.push('<div class="bar-col"><div class="bar-fill-area"><div class="bar-fill" style="height:' + Math.round(v/mxM*100) + '%" title="₪' + v + '"></div></div><div class="bar-lbl">' + ML[i] + '</div></div>');
   });
   h.push('</div></div>');
   h.push('<div class="two-col">');
-  h.push('<div class="chart-box"><h3>Buy Backs by Condition</h3><div class="bars">');
-  CD.forEach(function(v,i) {
-    h.push('<div class="bar-col"><div class="bar-fill" style="height:' + Math.round(v/mxC*100) + '%;background:' + CC[i] + '"></div><div class="bar-lbl">' + CL[i] + ' (' + v + ')</div></div>');
+  // Pie chart for condition distribution
+  var stops = [], cum = 0;
+  CD.forEach(function(v,i){
+    var deg = v/cTotal*360;
+    stops.push(CC[i] + ' ' + cum.toFixed(2) + 'deg ' + (cum+deg).toFixed(2) + 'deg');
+    cum += deg;
   });
-  h.push('</div></div>');
+  h.push('<div class="chart-box"><h3>Buy Backs by Condition</h3>');
+  h.push('<div class="pie-wrap">');
+  h.push('<div class="pie" style="background:conic-gradient(' + stops.join(',') + ')"></div>');
+  h.push('<div class="pie-legend">');
+  CD.forEach(function(v,i){
+    var pct = Math.round(v/cTotal*100);
+    h.push('<div class="pie-item"><span class="pie-dot" style="background:' + CC[i] + '"></span><span class="pie-lbl">' + CL[i] + '</span><span class="pie-pct">' + v + ' · ' + pct + '%</span></div>');
+  });
+  h.push('</div></div></div>');
   h.push('<div class="widget"><div class="widget-hdr"><h3>Top Categories</h3></div><div class="widget-body">');
   CAT.forEach(function(c) {
-    h.push('<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="font-weight:500">' + c.n + '</span><span style="color:#9fa8b3">' + c.cnt + ' items · ' + c.pct + '%</span></div><div class="pbar-wrap"><div class="pbar" style="width:' + c.pct + '%"></div></div></div>');
+    h.push('<div style="margin-bottom:12px"><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="font-weight:500">' + c.n + '</span><span style="color:#6b7889">' + c.cnt + ' items · ' + c.pct + '%</span></div><div class="pbar-wrap"><div class="pbar" style="width:' + c.pct + '%"></div></div></div>');
   });
   h.push('</div></div>');
   h.push('</div>');
@@ -941,7 +962,7 @@ function pgAnalytics() {
   h.push('</div>');
   h.push('<div class="chart-box"><h3>Sessions Overview</h3><div class="bars">');
   BD.forEach(function(v,i) {
-    h.push('<div class="bar-col"><div class="bar-fill" style="height:' + Math.round(v/mx*100) + '%"></div><div class="bar-lbl">' + BL[i] + '</div></div>');
+    h.push('<div class="bar-col"><div class="bar-fill-area"><div class="bar-fill" style="height:' + Math.round(v/mx*100) + '%"></div></div><div class="bar-lbl">' + BL[i] + '</div></div>');
   });
   h.push('</div></div>');
   return h.join("");
