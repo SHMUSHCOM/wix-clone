@@ -353,7 +353,7 @@ var NAV = [
 ];
 
 // ===== STATE =====
-var ST = {page:"bbrequests", activeNav:"bb-requests", openMenus:{buybacks:true}, orderTab:"all", bbReqTab:"all", bbRecvTab:"all", bbRelTab:"all", openDD:null, promoBannerVisible:true};
+var ST = {page:"bbanalytics", activeNav:"bb-analytics", openMenus:{buybacks:true}, orderTab:"all", bbReqTab:"all", bbRecvTab:"all", bbRelTab:"all", openDD:null, promoBannerVisible:true};
 
 // ===== PAGE HEADER HELPER =====
 function pageHdr(title, sub, actions) {
@@ -858,8 +858,7 @@ function pgBBAnalytics() {
     {l:"Pre-owned Revenue",v:"₪7,820",c:"+18% vs last month"}
   ];
   var MD = [320,540,480,890,1020,1030], ML = ["Dec","Jan","Feb","Mar","Apr","May"], mxM = Math.max.apply(null,MD);
-  var CD = [12,22,9,4], CL = ["Excellent","Good","Fair","Poor"], CC = ["#1b8a4e","#0f62e6",
-  "#a8690a","#c0392b"];
+  var CD = [12,22,9,4], CL = ["Excellent","Good","Fair","Poor"], CC = ["#22c55e","#3b82f6","#f59e0b","#ef4444"];
   var cTotal = CD.reduce(function(a,b){return a+b;},0);
   var CAT = [{n:"Apparel",cnt:18,pct:38},{n:"Accessories",cnt:11,pct:23},{n:"Home",cnt:9,pct:19},{n:"Furniture",cnt:5,pct:11},{n:"Lifestyle",cnt:4,pct:9}];
   var h = [];
