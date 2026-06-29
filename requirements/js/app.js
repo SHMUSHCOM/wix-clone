@@ -74,13 +74,32 @@
     showSection(initial);
   }
 
-  // Keyboard nav: 1-7 to jump between top-level sections
+  function currentSectionIndex() {
+    const active = document.querySelector('.nav-item.active');
+    const id = active ? active.dataset.section : validSections[0];
+    return validSections.indexOf(id);
+  }
+
+  // Keyboard nav: 1-7 to jump between top-level sections,
+  // ArrowUp/ArrowDown to step to the previous/next section.
   document.addEventListener('keydown', (e) => {
     if (e.target.matches('input, textarea')) return;
     if (e.metaKey || e.ctrlKey || e.altKey) return;
+
     const idx = parseInt(e.key, 10);
     if (idx >= 1 && idx <= validSections.length) {
       showSection(validSections[idx - 1]);
+      return;
+    }
+
+    if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      const step = e.key === 'ArrowDown' ? 1 : -1;
+      const next = currentSectionIndex() + step;
+      // Clamp so we don't run past the ends of the list.
+      if (next >= 0 && next <= validSections.length) {
+        showSection(validSections[next]);
+      }
     }
   });
 })();
