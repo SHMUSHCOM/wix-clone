@@ -114,6 +114,7 @@ h1,h2,h3,.page-hdr h1,.wix-logo{font-family:"Wix Madefor Display","Wix Madefor T
 .tbl-toolbar .tt-search{display:flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid #dde3ea;border-radius:20px;font-size:13px;background:#fff;min-width:200px;}
 .tbl-toolbar .tt-search input{border:none;outline:none;font-size:13px;color:#131720;background:transparent;flex:1;}
 .tbl-toolbar .tt-search input::placeholder{color:#9fa8b3;}
+.bb-hit{background:#fff3c4;color:inherit;padding:0 1px;border-radius:2px;}
 .tbl-container{background:#fff;border:1px solid #dfe5eb;border-radius:0 0 8px 8px;overflow:visible;box-shadow:0 6px 6px 0 rgba(22,45,61,0.06);}
 table{width:100%;border-collapse:collapse;}
 table th{text-align:left;font-size:11px;font-weight:600;color:#6b7889;padding:14px 16px;border-bottom:1px solid #dfe5eb;white-space:nowrap;background:#fff;text-transform:uppercase;letter-spacing:0.4px;}
@@ -399,7 +400,7 @@ var NAV = [
 ];
 
 // ===== STATE =====
-var ST = {page:"bbanalytics", activeNav:"bb-analytics", openMenus:{buybacks:true}, orderTab:"all", bbReqTab:"all", bbRecvTab:"all", bbRelTab:"all", invCond:"all", openDD:null, openRowMenu:null, promoBannerVisible:true};
+var ST = {page:"bbanalytics", activeNav:"bb-analytics", openMenus:{buybacks:true}, orderTab:"all", bbReqTab:"all", bbRecvTab:"all", bbRelTab:"all", invCond:"all", openDD:null, openRowMenu:null, promoBannerVisible:true, bbSearch:""};
 
 // ===== PAGE HEADER HELPER =====
 function pageHdr(title, sub, actions) {
@@ -452,6 +453,12 @@ function bind() {
       ST.openRowMenu = ST.openRowMenu === k ? null : k;
       ST.openDD = null;
       renderApp();
+    });
+  });
+  document.querySelectorAll("[data-bb-search]").forEach(function(el) {
+    el.addEventListener("input", function(){ ST.bbSearch = el.value; renderApp(); });
+    el.addEventListener("keydown", function(e){
+      if(e.key === "Escape") { ST.bbSearch = ""; renderApp(); }
     });
   });
   var pb=document.getElementById("dismiss-banner");
@@ -717,8 +724,17 @@ function bbToolbar(stateKey, tabs, counts, placeholder) {
     + '<div class="tt-right">'
     + '<div class="tt-filter-btn">' + ICO.filter + ' Filter</div>'
     + '<div class="tt-cols-btn">' + ICO.cols + '</div>'
-    + '<div class="tt-search">' + ICO.search + ' <input placeholder="' + placeholder + '" readonly></div>'
+    + '<div class="tt-search">' + ICO.search + ' <input data-bb-search placeholder="' + placeholder + '" value="' + ST.bbSearch + '"></div>'
     + '</div></div>';
+}
+
+function bbHighlight(text, q) {
+  if(!q) return text;
+  return String(text).replace(new RegExp(q, "gi"), function(m){ return '<mark class="bb-hit">' + m + '</mark>'; });
+}
+
+function bbMatches(r, q, fields) {
+  return fields.some(function(f){ return String(r[f]).indexOf(q) > -1; });
 }
 
 function bbMoney(s) { return parseInt(String(s).replace(/[^0-9]/g,""),10) || 0; }
@@ -871,6 +887,10 @@ function pgBBRequests() {
   var actionFor = {"Submitted":"Send Proposal","Proposed":"Awaiting customer","Approved":"Print Receipt","Declined":""};
   var tabs = [{k:"all",l:"All items"},{k:"Submitted",l:"Submitted"},{k:"Proposed",l:"Proposed"},{k:"Approved",l:"Approved"},{k:"Declined",l:"Declined"}];
   var filtered = REQ.filter(function(r){return ST.bbReqTab==="all"?true:r.status===ST.bbReqTab;});
+  var q = ST.bbSearch.trim();
+  if(q) {
+    filtered = filtered.filter(function(r){ return bbMatches(r, q, ["id","c","prod"]); });
+  }
   var counts = {all:REQ.length};
   ["Submitted","Proposed","Approved","Declined"].forEach(function(s){ counts[s] = REQ.filter(function(r){return r.status===s;}).length; });
   var awaitingProp = counts["Submitted"];
@@ -894,15 +914,16 @@ function pgBBRequests() {
     + '<th>Request</th><th>Date</th><th>Customer</th><th>Product</th><th>Condition</th><th>Proposed Price</th><th>Status</th><th></th>'
     + '</tr></thead><tbody>');
   if(filtered.length===0) {
-    h.push('<tr><td colspan="9" style="text-align:center;color:#6b7889;padding:30px">No requests in this status.</td></tr>');
+    var emptyMsg = q ? 'No requests match "' + q + '".' : 'No requests in this status.';
+    h.push('<tr><td colspan="9" style="text-align:center;color:#6b7889;padding:30px">' + emptyMsg + '</td></tr>');
   } else {
     filtered.forEach(function(r) {
       h.push('<tr>'
         + '<td><input type="checkbox"></td>'
-        + '<td style="font-weight:600;color:#116dff;cursor:pointer">' + r.id + '</td>'
+        + '<td style="font-weight:600;color:#116dff;cursor:pointer">' + bbHighlight(r.id, q) + '</td>'
         + '<td style="color:#6b7889">' + r.d + '</td>'
-        + '<td style="font-weight:500">' + r.c + '</td>'
-        + '<td><div class="prod-cell"><div class="prod-thumb">' + r.e + '</div><div><div class="prod-name">' + r.prod + '</div><div class="prod-sub">' + r.cat + '</div></div></div></td>'
+        + '<td style="font-weight:500">' + bbHighlight(r.c, q) + '</td>'
+        + '<td><div class="prod-cell"><div class="prod-thumb">' + r.e + '</div><div><div class="prod-name">' + bbHighlight(r.prod, q) + '</div><div class="prod-sub">' + r.cat + '</div></div></div></td>'
         + '<td>' + condIcon(r.cond) + '</td>'
         + '<td style="font-weight:600">' + r.proposed + '</td>'
         + '<td><span class="bdg ' + (statusBadge[r.status]||"gray") + '">' + r.status + '</span></td>'
@@ -929,6 +950,10 @@ function pgBBReceivables() {
   var carrierBadge = {"In Transit":"warn","Delivered":"ok"};
   var tabs = [{k:"all",l:"All items"},{k:"In Transit",l:"In Transit"},{k:"Received",l:"Received"},{k:"Approved",l:"Approved"},{k:"Rejected",l:"Rejected"}];
   var filtered = REC.filter(function(r){return ST.bbRecvTab==="all"?true:r.status===ST.bbRecvTab;});
+  var q = ST.bbSearch.trim();
+  if(q) {
+    filtered = filtered.filter(function(r){ return bbMatches(r, q, ["id","c","prod","carrier"]); });
+  }
   var counts = {all:REC.length};
   ["In Transit","Received","Approved","Rejected"].forEach(function(s){ counts[s] = REC.filter(function(r){return r.status===s;}).length; });
   var inTransit = counts["In Transit"];
@@ -953,15 +978,16 @@ function pgBBReceivables() {
     + '<th>Request</th><th>Customer</th><th>Product</th><th>Stated Condition</th><th>Carrier</th><th>Days</th><th>Review</th><th>Coupon</th><th>Status</th><th></th>'
     + '</tr></thead><tbody>');
   if(filtered.length===0) {
-    h.push('<tr><td colspan="11" style="text-align:center;color:#6b7889;padding:30px">No receivables in this status.</td></tr>');
+    var emptyMsg = q ? 'No receivables match "' + q + '".' : 'No receivables in this status.';
+    h.push('<tr><td colspan="11" style="text-align:center;color:#6b7889;padding:30px">' + emptyMsg + '</td></tr>');
   } else {
     filtered.forEach(function(r) {
       var actBtn = r.status==="Received" ? "Review" : (r.status==="Approved" ? "View Coupon" : (r.status==="In Transit" ? "Track" : "View"));
       h.push('<tr>'
         + '<td><input type="checkbox"></td>'
-        + '<td style="font-weight:600;color:#116dff;cursor:pointer">' + r.id + '</td>'
-        + '<td style="font-weight:500">' + r.c + '</td>'
-        + '<td><div class="prod-cell"><div class="prod-thumb">' + r.e + '</div><div><div class="prod-name">' + r.prod + '</div><div class="prod-sub">' + r.cat + '</div></div></div></td>'
+        + '<td style="font-weight:600;color:#116dff;cursor:pointer">' + bbHighlight(r.id, q) + '</td>'
+        + '<td style="font-weight:500">' + bbHighlight(r.c, q) + '</td>'
+        + '<td><div class="prod-cell"><div class="prod-thumb">' + r.e + '</div><div><div class="prod-name">' + bbHighlight(r.prod, q) + '</div><div class="prod-sub">' + r.cat + '</div></div></div></td>'
         + '<td>' + condIcon(r.cond) + '</td>'
         + '<td><span class="bdg ' + (carrierBadge[r.carrier]||"gray") + '">' + r.carrier + '</span></td>'
         + '<td style="color:#6b7889">' + r.days + 'd</td>'
