@@ -114,6 +114,8 @@ h1,h2,h3,.page-hdr h1,.wix-logo{font-family:"Wix Madefor Display","Wix Madefor T
 .tbl-toolbar .tt-search{display:flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid #dde3ea;border-radius:20px;font-size:13px;background:#fff;min-width:200px;}
 .tbl-toolbar .tt-search input{border:none;outline:none;font-size:13px;color:#131720;background:transparent;flex:1;}
 .tbl-toolbar .tt-search input::placeholder{color:#9fa8b3;}
+.bb-bulk{display:flex;align-items:center;gap:10px;padding:10px 16px;margin-bottom:12px;background:#e8f1ff;border-radius:8px;font-size:13px;font-weight:600;color:#0f62e6;}
+.bb-bulk .bb-bulk-spacer{flex:1;}
 .tbl-container{background:#fff;border:1px solid #dfe5eb;border-radius:0 0 8px 8px;overflow:visible;box-shadow:0 6px 6px 0 rgba(22,45,61,0.06);}
 table{width:100%;border-collapse:collapse;}
 table th{text-align:left;font-size:11px;font-weight:600;color:#6b7889;padding:14px 16px;border-bottom:1px solid #dfe5eb;white-space:nowrap;background:#fff;text-transform:uppercase;letter-spacing:0.4px;}
@@ -399,7 +401,7 @@ var NAV = [
 ];
 
 // ===== STATE =====
-var ST = {page:"bbanalytics", activeNav:"bb-analytics", openMenus:{buybacks:true}, orderTab:"all", bbReqTab:"all", bbRecvTab:"all", bbRelTab:"all", invCond:"all", openDD:null, openRowMenu:null, promoBannerVisible:true};
+var ST = {page:"bbanalytics", activeNav:"bb-analytics", openMenus:{buybacks:true}, orderTab:"all", bbReqTab:"all", bbRecvTab:"all", bbRelTab:"all", invCond:"all", openDD:null, openRowMenu:null, promoBannerVisible:true, bbSel:{}};
 
 // ===== PAGE HEADER HELPER =====
 function pageHdr(title, sub, actions) {
@@ -453,6 +455,22 @@ function bind() {
       ST.openDD = null;
       renderApp();
     });
+  });
+  document.querySelectorAll("[data-bb-sel]").forEach(function(el) {
+    el.addEventListener("change", function(){
+      var id = el.getAttribute("data-bb-sel");
+      ST.bbSel[id] = !ST.bbSel[id];
+      renderApp();
+    });
+  });
+  var selAll = document.querySelector("[data-bb-sel-all]");
+  if(selAll) selAll.addEventListener("change", function(){
+    BB_REC.forEach(function(r){ ST.bbSel[r.id] = selAll.checked; });
+    renderApp();
+  });
+  var bulkActions = {approve:bbBulkApprove, archive:bbBulkArchive, export:bbExportCsv};
+  document.querySelectorAll("[data-bb-bulk]").forEach(function(el) {
+    el.addEventListener("click", function(){ bulkActions[el.getAttribute("data-bb-bulk")](); });
   });
   var pb=document.getElementById("dismiss-banner");
   if(pb)pb.addEventListener("click",dismissBanner);
@@ -915,15 +933,61 @@ function pgBBRequests() {
 }
 
 // ===== BUY BACKS — RECEIVABLES =====
-function pgBBReceivables() {
-  var REC = [
+var BB_REC = [
     {id:"#BB1003",c:"Susie Bievins",prod:"Round Eyeglasses",cat:"Accessories",cond:"Fair",carrier:"In Transit",days:2,review:"-",coupon:"-",status:"In Transit",e:"👓"},
     {id:"#BB1012",c:"Eli Sharon",prod:"Foaming Facial Cleanser",cat:"Lifestyle",cond:"Good",carrier:"In Transit",days:1,review:"-",coupon:"-",status:"In Transit",e:"🧴"},
     {id:"#BB1004",c:"Adam Walker",prod:"Solid Wood Chair",cat:"Furniture",cond:"Good",carrier:"Delivered",days:5,review:"Pending",coupon:"-",status:"Received",e:"🪑"},
     {id:"#BB1010",c:"Riya Patel",prod:"Crew T-Shirt",cat:"Apparel",cond:"Good",carrier:"Delivered",days:7,review:"Approved",coupon:"₪120",status:"Approved",e:"👕"},
     {id:"#BB1013",c:"Maya Levi",prod:"Textured Loop Earrings",cat:"Accessories",cond:"Excellent",carrier:"Delivered",days:9,review:"Approved",coupon:"₪220",status:"Approved",e:"💍"},
-    {id:"#BB1011",c:"Tom Becker",prod:"Hydrating Eye Serum",cat:"Lifestyle",cond:"Excellent",carrier:"Delivered",days:6,review:"Condition mismatch",coupon:"-",status:"Rejected",e:"🧪"}
-  ];
+    {id:"#BB1011",c:"Tom Becker",prod:"Hydrating Eye Serum",cat:"Lifestyle",cond:"Excellent",carrier:"Delivered",days:6,review:"Condition mismatch",coupon:"-",status:"Rejected",e:"🧪"},
+    {id:"#BB1014",c:"Yael Mizrahi",prod:"Linen Napkins, Set of 4",cat:"Home",cond:"Good",carrier:"Delivered",days:3,review:"Pending",coupon:"-",status:"Received",e:"🧺"}
+];
+
+function bbSelectedReceivables() {
+  return BB_REC.filter(function(r){ return ST.bbSel[r.id]; });
+}
+
+function bbBulkApprove() {
+  bbSelectedReceivables().forEach(function(r) {
+    r.status = "Approved";
+    r.review = "Approved";
+    r.coupon = "₪" + (bbMoney(r.coupon) || 100);
+  });
+  ST.bbSel = {};
+  renderApp();
+}
+
+function bbBulkArchive() {
+  BB_REC.forEach(function(r, i) {
+    if(ST.bbSel[r.id]) BB_REC.splice(i, 1);
+  });
+  ST.bbSel = {};
+  renderApp();
+}
+
+function bbExportCsv() {
+  var rows = [["Request","Customer","Product","Condition","Status","Coupon"]];
+  bbSelectedReceivables().forEach(function(r) {
+    rows.push([r.id, r.c, r.prod, r.cond, r.status, r.coupon]);
+  });
+  var csv = rows.map(function(row){ return row.join(","); }).join("\n");
+  var a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([csv], {type:"text/csv"}));
+  a.download = "receivables.csv";
+  a.click();
+}
+
+function bbBulkBar() {
+  var n = bbSelectedReceivables().length;
+  if(!n) return "";
+  return '<div class="bb-bulk"><span>' + n + ' selected</span><span class="bb-bulk-spacer"></span>'
+    + '<button class="btn-secondary" data-bb-bulk="export">' + ICO.download + ' Export CSV</button>'
+    + '<button class="btn-secondary" data-bb-bulk="archive">' + ICO.archive + ' Archive</button>'
+    + '<button class="btn-primary" data-bb-bulk="approve">' + ICO.check2 + ' Approve &amp; issue coupons</button></div>';
+}
+
+function pgBBReceivables() {
+  var REC = BB_REC;
   var statusBadge = {"In Transit":"warn","Received":"blue","Approved":"ok","Rejected":"bad"};
   var reviewBadge = {"Approved":"ok","Pending":"warn","Condition mismatch":"bad"};
   var carrierBadge = {"In Transit":"warn","Delivered":"ok"};
@@ -947,9 +1011,11 @@ function pgBBReceivables() {
     + '<div class="stat-item">Coupons Issued <span class="stat-val">₪' + couponsTotal + '</span></div>'
     + '<div class="stat-date"><span class="stat-date-btn">Last 30 days ' + ICO.chevDown + '</span></div>'
     + '</div>');
+  var allSelected = Object.keys(ST.bbSel).length === REC.length;
   h.push(bbToolbar("bbRecvTab", tabs, counts, "Search receivables..."));
+  h.push(bbBulkBar());
   h.push('<div class="tbl-container"><table><thead><tr>'
-    + '<th style="width:36px"><input type="checkbox"></th>'
+    + '<th style="width:36px"><input type="checkbox" data-bb-sel-all' + (allSelected ? " checked" : "") + '></th>'
     + '<th>Request</th><th>Customer</th><th>Product</th><th>Stated Condition</th><th>Carrier</th><th>Days</th><th>Review</th><th>Coupon</th><th>Status</th><th></th>'
     + '</tr></thead><tbody>');
   if(filtered.length===0) {
@@ -958,7 +1024,7 @@ function pgBBReceivables() {
     filtered.forEach(function(r) {
       var actBtn = r.status==="Received" ? "Review" : (r.status==="Approved" ? "View Coupon" : (r.status==="In Transit" ? "Track" : "View"));
       h.push('<tr>'
-        + '<td><input type="checkbox"></td>'
+        + '<td><input type="checkbox" data-bb-sel="' + r.id + '"' + (ST.bbSel[r.id] ? " checked" : "") + '></td>'
         + '<td style="font-weight:600;color:#116dff;cursor:pointer">' + r.id + '</td>'
         + '<td style="font-weight:500">' + r.c + '</td>'
         + '<td><div class="prod-cell"><div class="prod-thumb">' + r.e + '</div><div><div class="prod-name">' + r.prod + '</div><div class="prod-sub">' + r.cat + '</div></div></div></td>'
