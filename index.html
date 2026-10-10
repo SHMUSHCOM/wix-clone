@@ -114,6 +114,11 @@ h1,h2,h3,.page-hdr h1,.wix-logo{font-family:"Wix Madefor Display","Wix Madefor T
 .tbl-toolbar .tt-search{display:flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid #dde3ea;border-radius:20px;font-size:13px;background:#fff;min-width:200px;}
 .tbl-toolbar .tt-search input{border:none;outline:none;font-size:13px;color:#131720;background:transparent;flex:1;}
 .tbl-toolbar .tt-search input::placeholder{color:#9fa8b3;}
+.bb-offer .widget-body{display:flex;flex-direction:column;gap:10px;font-size:13px;}
+.bb-offer-row{display:flex;justify-content:space-between;color:#32536a;}
+.bb-offer-row.total{font-size:15px;font-weight:700;color:#131720;border-top:1px solid #e8ecf0;padding-top:10px;}
+.bb-offer-note{color:#6b7889;font-size:12px;}
+.bb-offer-actions{display:flex;justify-content:flex-end;gap:8px;}
 .tbl-container{background:#fff;border:1px solid #dfe5eb;border-radius:0 0 8px 8px;overflow:visible;box-shadow:0 6px 6px 0 rgba(22,45,61,0.06);}
 table{width:100%;border-collapse:collapse;}
 table th{text-align:left;font-size:11px;font-weight:600;color:#6b7889;padding:14px 16px;border-bottom:1px solid #dfe5eb;white-space:nowrap;background:#fff;text-transform:uppercase;letter-spacing:0.4px;}
@@ -399,7 +404,7 @@ var NAV = [
 ];
 
 // ===== STATE =====
-var ST = {page:"bbanalytics", activeNav:"bb-analytics", openMenus:{buybacks:true}, orderTab:"all", bbReqTab:"all", bbRecvTab:"all", bbRelTab:"all", invCond:"all", openDD:null, openRowMenu:null, promoBannerVisible:true};
+var ST = {page:"bbanalytics", activeNav:"bb-analytics", openMenus:{buybacks:true}, orderTab:"all", bbReqTab:"all", bbRecvTab:"all", bbRelTab:"all", invCond:"all", openDD:null, openRowMenu:null, promoBannerVisible:true, bbOfferFor:null, bbPayAsCredit:true};
 
 // ===== PAGE HEADER HELPER =====
 function pageHdr(title, sub, actions) {
@@ -454,6 +459,15 @@ function bind() {
       renderApp();
     });
   });
+  document.querySelectorAll("[data-bb-offer]").forEach(function(el) {
+    el.addEventListener("click", function(){ ST.bbOfferFor = el.getAttribute("data-bb-offer"); renderApp(); });
+  });
+  var credit = document.querySelector("[data-bb-credit]");
+  if(credit) credit.addEventListener("change", function(){ ST.bbPayAsCredit = credit.checked; renderApp(); });
+  var cancel = document.querySelector("[data-bb-offer-cancel]");
+  if(cancel) cancel.addEventListener("click", function(){ ST.bbOfferFor = null; renderApp(); });
+  var send = document.querySelector("[data-bb-offer-send]");
+  if(send) send.addEventListener("click", bbSendOffer);
   var pb=document.getElementById("dismiss-banner");
   if(pb)pb.addEventListener("click",dismissBanner);
 }
@@ -856,17 +870,71 @@ function bbRelRowMenu(r, idx) {
 }
 
 // ===== BUY BACKS — REQUESTS =====
-function pgBBRequests() {
-  var REQ = [
-    {id:"#BB1001",c:"Stuart Farley",d:"May 22, 2026",prod:"Knitted Golf Sweater",cat:"Apparel",cond:"Good",proposed:"-",status:"Submitted",e:"👕"},
+var BB_REQ = [
+    {id:"#BB1001",c:"Stuart Farley",d:"May 22, 2026",prod:"Knitted Golf Sweater",cat:"Apparel",cond:"Good",orig:"₪274.90",proposed:"-",status:"Submitted",e:"👕"},
     {id:"#BB1002",c:"Kat Jones",d:"May 21, 2026",prod:"Ceramic Flower Vase",cat:"Home",cond:"Excellent",proposed:"₪140",status:"Proposed",e:"🏺"},
     {id:"#BB1003",c:"Susie Bievins",d:"May 18, 2026",prod:"Round Eyeglasses",cat:"Accessories",cond:"Fair",proposed:"₪25",status:"Approved",e:"👓"},
     {id:"#BB1004",c:"Adam Walker",d:"May 14, 2026",prod:"Solid Wood Chair",cat:"Furniture",cond:"Good",proposed:"₪320",status:"Approved",e:"🪑"},
     {id:"#BB1005",c:"Dan Klein",d:"May 12, 2026",prod:"Stainless Steel Water Bottle",cat:"Lifestyle",cond:"Excellent",proposed:"₪95",status:"Proposed",e:"🧐"},
-    {id:"#BB1006",c:"Lea Cohen",d:"May 10, 2026",prod:"Minimalist Tote Bag",cat:"Bags",cond:"Good",proposed:"-",status:"Submitted",e:"👜"},
+    {id:"#BB1006",c:"Lea Cohen",d:"May 10, 2026",prod:"Minimalist Tote Bag",cat:"Bags",cond:"Good",orig:"₪189",proposed:"-",status:"Submitted",e:"👜"},
     {id:"#BB1007",c:"Noa Bar",d:"May 7, 2026",prod:"Essential Oil Diffuser",cat:"Home",cond:"Good",proposed:"₪40",status:"Declined",e:"🪧"},
-    {id:"#BB1008",c:"Maya Levi",d:"May 5, 2026",prod:"Baseball Cap",cat:"Apparel",cond:"Fair",proposed:"-",status:"Submitted",e:"🧢"}
-  ];
+    {id:"#BB1008",c:"Maya Levi",d:"May 5, 2026",prod:"Baseball Cap",cat:"Apparel",cond:"Fair",orig:"₪79.90",proposed:"-",status:"Submitted",e:"🧢"}
+];
+
+// ===== BUY BACKS — OFFER CALCULATOR =====
+var BB_COND_MULT = {"Excellent":0.6,"Good":0.45,"Fair":0.3,"Poor":0};
+var BB_CAT_CAP = {"Apparel":150,"Home":200,"Accessories":120,"Furniture":400,"Lifestyle":100,"Bags":180};
+var BB_CREDIT_BONUS_PCT = 10;
+var BB_COUPON_VALID_MONTHS = 6;
+
+function bbSuggestedOffer(r, asCredit) {
+  var mult = BB_COND_MULT[r.cond] || 0.5;
+  var offer = bbMoney(r.orig) * mult;
+  if(asCredit) offer += offer * BB_CREDIT_BONUS_PCT / 100;
+  return Math.round(Math.min(offer, BB_CAT_CAP[r.cat]));
+}
+
+function bbCouponExpiry() {
+  var d = new Date();
+  d.setHours(0, 0, 0, 0);
+  d.setMonth(d.getMonth() + BB_COUPON_VALID_MONTHS);
+  return d.toISOString().slice(0, 10);
+}
+
+function bbCouponCode() {
+  return "BB-" + Math.random().toString(36).substr(2, 6).toUpperCase();
+}
+
+function bbFindReq(id) {
+  return BB_REQ.filter(function(r){ return r.id === id; })[0];
+}
+
+function bbOfferPanel() {
+  var r = bbFindReq(ST.bbOfferFor);
+  if(!r) return "";
+  var amount = bbSuggestedOffer(r, ST.bbPayAsCredit);
+  return '<div class="widget bb-offer"><div class="widget-hdr"><h3>Send proposal · ' + r.id + ' · ' + r.prod + '</h3></div><div class="widget-body">'
+    + '<div class="bb-offer-row"><span>Original price</span><span>' + r.orig + '</span></div>'
+    + '<div class="bb-offer-row"><span>Condition: ' + r.cond + '</span><span>× ' + (BB_COND_MULT[r.cond] || 0.5) + '</span></div>'
+    + '<label class="bb-offer-row"><span><input type="checkbox" data-bb-credit' + (ST.bbPayAsCredit ? " checked" : "") + '> Pay as store credit (+' + BB_CREDIT_BONUS_PCT + '% bonus)</span></label>'
+    + '<div class="bb-offer-row total"><span>Suggested offer</span><span>₪' + amount + '</span></div>'
+    + (ST.bbPayAsCredit ? '<div class="bb-offer-note">Store-credit coupon valid until ' + bbCouponExpiry() + '</div>' : '')
+    + '<div class="bb-offer-actions"><button class="btn-secondary" data-bb-offer-cancel>Cancel</button>'
+    + '<button class="btn-primary" data-bb-offer-send>Send ₪' + amount + ' proposal</button></div>'
+    + '</div></div>';
+}
+
+function bbSendOffer() {
+  var r = bbFindReq(ST.bbOfferFor);
+  r.proposed = "₪" + bbSuggestedOffer(r, ST.bbPayAsCredit);
+  r.status = "Proposed";
+  if(ST.bbPayAsCredit) r.coupon = bbCouponCode();
+  ST.bbOfferFor = null;
+  renderApp();
+}
+
+function pgBBRequests() {
+  var REQ = BB_REQ;
   var statusBadge = {"Submitted":"gray","Proposed":"warn","Approved":"ok","Declined":"bad"};
   var actionFor = {"Submitted":"Send Proposal","Proposed":"Awaiting customer","Approved":"Print Receipt","Declined":""};
   var tabs = [{k:"all",l:"All items"},{k:"Submitted",l:"Submitted"},{k:"Proposed",l:"Proposed"},{k:"Approved",l:"Approved"},{k:"Declined",l:"Declined"}];
@@ -888,6 +956,7 @@ function pgBBRequests() {
     + '<div class="stat-item">Approved <span class="stat-val">' + approved + '</span></div>'
     + '<div class="stat-date"><span class="stat-date-btn">Last 30 days ' + ICO.chevDown + '</span></div>'
     + '</div>');
+  h.push(bbOfferPanel());
   h.push(bbToolbar("bbReqTab", tabs, counts, "Search requests..."));
   h.push('<div class="tbl-container"><table><thead><tr>'
     + '<th style="width:36px"><input type="checkbox"></th>'
@@ -906,7 +975,7 @@ function pgBBRequests() {
         + '<td>' + condIcon(r.cond) + '</td>'
         + '<td style="font-weight:600">' + r.proposed + '</td>'
         + '<td><span class="bdg ' + (statusBadge[r.status]||"gray") + '">' + r.status + '</span></td>'
-        + '<td><div class="acell">' + (actionFor[r.status] ? '<button>' + actionFor[r.status] + '</button>' : '<span style="color:#b4bec8;font-size:12px">—</span>') + bbReqRowMenu(r) + '</div></td>'
+        + '<td><div class="acell">' + (actionFor[r.status] ? '<button' + (r.status === "Submitted" ? ' data-bb-offer="' + r.id + '"' : '') + '>' + actionFor[r.status] + '</button>' : '<span style="color:#b4bec8;font-size:12px">—</span>') + bbReqRowMenu(r) + '</div></td>'
         + '</tr>');
     });
   }
